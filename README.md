@@ -13,7 +13,8 @@ utilities for compiling source code using AppGameKit Classic.
 * Only works with AGK Classic as Studio doesn't expose the compiler executable
 
 # TODO
-* Run in debug mode
+* Open help when pressing F1 in a built-in function
 * Autocomplete built-in functions
+* Run in debug mode
 * Intellisense (?)
 * Built-in test runner
