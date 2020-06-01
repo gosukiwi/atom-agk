@@ -16,5 +16,12 @@
     "atom": ">=1.0.0 <2.0.0"
   },
   "dependencies": {
+  },
+  "consumedServices": {
+    "linter-indie": {
+      "versions": {
+        "2.0.0": "consumeIndie"
+      }
+    }
   }
 }
