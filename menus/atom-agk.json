@@ -2,8 +2,12 @@
   "context-menu": {
     "atom-text-editor": [
       {
-        "label": "Compile File using AGK",
+        "label": "AGK: Compile",
         "command": "atom-agk:compile"
+      },
+      {
+        "label": "AGK: Compile and Run",
+        "command": "atom-agk:compile-and-run"
       }
     ]
   },
@@ -17,6 +21,10 @@
             {
               "label": "Compile",
               "command": "atom-agk:compile"
+            },
+            {
+              "label": "Compile and Run",
+              "command": "atom-agk:compile-and-run"
             }
           ]
         }

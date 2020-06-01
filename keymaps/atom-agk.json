@@ -1,5 +1,6 @@
 {
   "atom-workspace": {
-    "ctrl-alt-o": "atom-agk:toggle"
+    "f5": "atom-agk:compile-and-run",
+    "f7": "atom-agk:compile"
   }
 }

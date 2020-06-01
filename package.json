@@ -8,7 +8,10 @@
     "appgamekit"
   ],
   "activationCommands": {
-    "atom-workspace": "atom-agk:compile"
+    "atom-workspace": [
+      "atom-agk:compile-and-run",
+      "atom-agk:compile"
+    ]
   },
   "repository": "https://github.com/gosukiwi/atom-agk",
   "license": "MIT",
