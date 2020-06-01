@@ -2,8 +2,8 @@
   "context-menu": {
     "atom-text-editor": [
       {
-        "label": "Toggle atom-agk",
-        "command": "atom-agk:toggle"
+        "label": "Compile File using AGK",
+        "command": "atom-agk:compile"
       }
     ]
   },
@@ -15,8 +15,8 @@
           "label": "atom-agk",
           "submenu": [
             {
-              "label": "Toggle",
-              "command": "atom-agk:toggle"
+              "label": "Compile",
+              "command": "atom-agk:compile"
             }
           ]
         }
