@@ -10,7 +10,8 @@
   "activationCommands": {
     "atom-workspace": [
       "atom-agk:compile-and-run",
-      "atom-agk:compile"
+      "atom-agk:compile",
+      "atom-agk:debug"
     ]
   },
   "repository": "https://github.com/gosukiwi/atom-agk",
@@ -18,8 +19,7 @@
   "engines": {
     "atom": ">=1.0.0 <2.0.0"
   },
-  "dependencies": {
-  },
+  "dependencies": {},
   "consumedServices": {
     "linter-indie": {
       "versions": {
