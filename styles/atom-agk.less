@@ -1,0 +1,17 @@
+atom-text-editor .gutter .line-number.cursor-line-no-selection.agk-debugger-breakpoint,
+atom-text-editor .gutter .line-number.cursor-line.agk-debugger-breakpoint,
+atom-text-editor .gutter .line-number.agk-debugger-breakpoint {
+  background-color: rgba(255, 0, 0, .2);
+  border-radius: 3px 0 0 3px;
+
+  &:after {
+    content: ' ';
+    position: absolute;
+    right: 5px;
+    top: ~"calc(50% - 5px)";
+    height: 10px;
+    width: 10px;
+    background-color: rgba(255, 255, 255, .9);
+    border-radius: 50%
+  }
+}
