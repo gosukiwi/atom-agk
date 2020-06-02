@@ -18,3 +18,9 @@ utilities for compiling source code using AppGameKit Classic.
 * Run in debug mode
 * Intellisense (?)
 * Built-in test runner
+
+# Thanks
+Particular thanks to
+[MadBit](https://forum.thegamecreators.com/user/16e3dff53459a69a78e8c26031783c78)
+from TheGameCreators forums for all the help running the debugger and using the
+compiler from the CLI.
