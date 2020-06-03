@@ -7,18 +7,18 @@ import DebuggerView from '../../lib/debugger/debugger_view'
 
 describe('Debugger', () => {
   describe('commands', () => {
-    it('binds atom-agk:toggle-debugger to #toggleDebugger', () => {
+    it('binds atom-agk:toggle-debugger to \\#toggleDebuggerWindow', () => {
       const disposables = new CompositeDisposable()
       const debugManager = new Debugger({ subscriptions: disposables })
       const workspaceElement = atom.views.getView(atom.workspace)
-      spyOn(debugManager, 'toggleDebugger')
+      spyOn(debugManager, 'toggleDebuggerWindow')
 
       atom.commands.dispatch(workspaceElement, 'atom-agk:toggle-debugger')
 
-      expect(debugManager.toggleDebugger).toHaveBeenCalled()
+      expect(debugManager.toggleDebuggerWindow).toHaveBeenCalled()
     })
 
-    it('binds "atom-agk:debug" to #debug', () => {
+    it('binds "atom-agk:debug" to \\#debug', () => {
       const disposables = new CompositeDisposable()
       const debugManager = new Debugger({ subscriptions: disposables })
       const workspaceElement = atom.views.getView(atom.workspace)
@@ -40,7 +40,7 @@ describe('Debugger', () => {
     runs(() => expect(view.getDefaultLocation).toHaveBeenCalled())
   })
 
-  it('sends commands to runner#watch on view command entered', () => {
+  it('sends commands to runner\\#watch on view command entered', () => {
     const disposables = new CompositeDisposable()
     const breakpoints = new BreakpointManager(disposables)
     const runner = new Runner(breakpoints)
@@ -53,7 +53,7 @@ describe('Debugger', () => {
     expect(runner.watch).toHaveBeenCalledWith('foo')
   })
 
-  describe('#debug', () => {
+  describe('\\#debug', () => {
     it('starts the runner', () => {
       const disposables = new CompositeDisposable()
       const breakpoints = new BreakpointManager(disposables)
