@@ -40,6 +40,19 @@ describe('Debugger', () => {
     runs(() => expect(view.getDefaultLocation).toHaveBeenCalled())
   })
 
+  it('sends commands to runner#watch on view command entered', () => {
+    const disposables = new CompositeDisposable()
+    const breakpoints = new BreakpointManager(disposables)
+    const runner = new Runner(breakpoints)
+    const view = new DebuggerView()
+    new Debugger({ subscriptions: disposables, runner: runner, view: view })
+    spyOn(runner, 'watch')
+
+    view.emit('command-entered', 'foo')
+
+    expect(runner.watch).toHaveBeenCalledWith('foo')
+  })
+
   describe('#debug', () => {
     it('starts the runner', () => {
       const disposables = new CompositeDisposable()
