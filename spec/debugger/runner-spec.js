@@ -9,17 +9,16 @@ import Spawner from '../../lib/debugger/spawner'
 function mockProcess () {
   const dummyProcess = new EventEmitter()
   dummyProcess.stdin = new Writable({
-    write () {},
-    final () {}
+    write: jasmine.createSpy('write'),
+    final: jasmine.createSpy('final')
   })
-  dummyProcess.stdin.setEncoding = () => {}
+  dummyProcess.stdin.setEncoding = jasmine.createSpy('setEncoding')
   dummyProcess.stdout = new Readable({
-    read () {}
+    read: jasmine.createSpy('read')
   })
   dummyProcess.stderr = new Readable({
-    read () {}
+    read: jasmine.createSpy('read')
   })
-
   return dummyProcess
 }
 
@@ -81,7 +80,7 @@ describe('Runner', () => {
       expect(runner.started).toBe(false)
     })
 
-    it('does not mark as started if any process fails to spawn', () => {
+    it('marks as started if both processes spawn', () => {
       atom.config.set('atom-agk.agk_compiler_path', 'C:\\Foo\\bar')
       const disposables = new CompositeDisposable()
       const spawner = new Spawner()
@@ -92,5 +91,7 @@ describe('Runner', () => {
 
       expect(runner.started).toBe(true)
     })
+
+    it('sends initial commands to the broadcaster')
   })
 })
