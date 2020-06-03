@@ -1,6 +1,6 @@
 'use babel'
 
-import AtomAgk from '../lib/atom-agk'
+// import AtomAgk from '../lib/atom-agk'
 
 // Use the command `window:run-package-specs` (cmd-alt-ctrl-p) to run specs.
 //
@@ -8,66 +8,14 @@ import AtomAgk from '../lib/atom-agk'
 // or `fdescribe`). Remove the `f` to unfocus the block.
 
 describe('AtomAgk', () => {
-  let workspaceElement, activationPromise
+  it('activates when opening an `.agc` file', () => {
+    // Activate package
+    waitsForPromise(() => atom.workspace.open('demo.agc'))
+    waitsForPromise(() => atom.packages.activatePackage('atom-agk'))
+    atom.packages.triggerDeferredActivationHooks()
 
-  beforeEach(() => {
-    workspaceElement = atom.views.getView(atom.workspace)
-    activationPromise = atom.packages.activatePackage('atom-agk')
-  })
-
-  describe('when the atom-agk:toggle event is triggered', () => {
-    it('hides and shows the modal panel', () => {
-      // Before the activation event the view is not on the DOM, and no panel
-      // has been created
-      expect(workspaceElement.querySelector('.atom-agk')).not.toExist()
-
-      // This is an activation event, triggering it will cause the package to be
-      // activated.
-      atom.commands.dispatch(workspaceElement, 'atom-agk:toggle')
-
-      waitsForPromise(() => {
-        return activationPromise
-      })
-
-      runs(() => {
-        expect(workspaceElement.querySelector('.atom-agk')).toExist()
-
-        const atomAgkElement = workspaceElement.querySelector('.atom-agk')
-        expect(atomAgkElement).toExist()
-
-        const atomAgkPanel = atom.workspace.panelForItem(atomAgkElement)
-        expect(atomAgkPanel.isVisible()).toBe(true)
-        atom.commands.dispatch(workspaceElement, 'atom-agk:toggle')
-        expect(atomAgkPanel.isVisible()).toBe(false)
-      })
-    })
-
-    it('hides and shows the view', () => {
-      // This test shows you an integration test testing at the view level.
-
-      // Attaching the workspaceElement to the DOM is required to allow the
-      // `toBeVisible()` matchers to work. Anything testing visibility or focus
-      // requires that the workspaceElement is on the DOM. Tests that attach the
-      // workspaceElement to the DOM are generally slower than those off DOM.
-      jasmine.attachToDOM(workspaceElement)
-
-      expect(workspaceElement.querySelector('.atom-agk')).not.toExist()
-
-      // This is an activation event, triggering it causes the package to be
-      // activated.
-      atom.commands.dispatch(workspaceElement, 'atom-agk:toggle')
-
-      waitsForPromise(() => {
-        return activationPromise
-      })
-
-      runs(() => {
-        // Now we can test for view visibility
-        const atomAgkElement = workspaceElement.querySelector('.atom-agk')
-        expect(atomAgkElement).toBeVisible()
-        atom.commands.dispatch(workspaceElement, 'atom-agk:toggle')
-        expect(atomAgkElement).not.toBeVisible()
-      })
+    runs(() => {
+      expect(atom.packages.isPackageActive('atom-agk')).toBe(true)
     })
   })
 })
