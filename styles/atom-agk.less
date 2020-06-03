@@ -1,3 +1,5 @@
+@import 'ui-variables';
+
 atom-text-editor .gutter .line-number.cursor-line-no-selection.agk-debugger-breakpoint,
 atom-text-editor .gutter .line-number.cursor-line.agk-debugger-breakpoint,
 atom-text-editor .gutter .line-number.agk-debugger-breakpoint {
@@ -13,5 +15,42 @@ atom-text-editor .gutter .line-number.agk-debugger-breakpoint {
     width: 10px;
     background-color: rgba(255, 255, 255, .9);
     border-radius: 50%
+  }
+}
+
+.agk-debugger {
+  display: flex;
+  flex-direction: column;
+
+  &__controls {
+    text-align: center;
+    padding: .5rem;
+  }
+
+  &__output {
+    flex-grow: 1;
+    background-color: #111;
+    color: @text-color-subtle;
+    padding: .5rem;
+    font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;
+  }
+
+  &__prompt {
+    padding: .25rem;
+    padding-left: .5rem;
+    background-color: @background-color-selected;
+    font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;
+    display: flex;
+
+    span {
+      font-weight: bold;
+      padding-right: .5rem;
+    }
+
+    input {
+      background-color: @background-color-selected;
+      border: none;
+      flex-grow: 1;
+    }
   }
 }
