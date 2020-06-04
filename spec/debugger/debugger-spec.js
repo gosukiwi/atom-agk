@@ -30,6 +30,20 @@ describe('Debugger', () => {
     })
   })
 
+  describe('.debug', () => {
+    it('starts the runner', () => {
+      const disposables = new CompositeDisposable()
+      const breakpoints = new BreakpointManager(disposables)
+      const runner = new Runner({ breakpoints })
+      const debugManager = new Debugger({ subscriptions: disposables, runner: runner })
+      spyOn(runner, 'start')
+
+      debugManager.debug()
+
+      expect(runner.start).toHaveBeenCalled()
+    })
+  })
+
   it('opens the view on atom://agk-debugger', () => {
     const disposables = new CompositeDisposable()
     const view = new DebuggerView()
@@ -53,17 +67,16 @@ describe('Debugger', () => {
     expect(runner.watch).toHaveBeenCalledWith('foo')
   })
 
-  describe('.debug', () => {
-    it('starts the runner', () => {
-      const disposables = new CompositeDisposable()
-      const breakpoints = new BreakpointManager(disposables)
-      const runner = new Runner({ breakpoints })
-      const debugManager = new Debugger({ subscriptions: disposables, runner: runner })
-      spyOn(runner, 'start')
+  it('highlights breakpoint if needed', () => {
+    const disposables = new CompositeDisposable()
+    const breakpoints = new BreakpointManager(disposables)
+    const runner = new Runner({ breakpoints })
+    const view = new DebuggerView()
+    const debugManager = new Debugger({ subscriptions: disposables, runner, view })
+    spyOn(debugManager, 'highlightBreakpointIfNeeded')
 
-      debugManager.debug()
+    runner.out('< Break:foo.agc:3 Some More Text')
 
-      expect(runner.start).toHaveBeenCalled()
-    })
+    expect(debugManager.highlightBreakpointIfNeeded).toHaveBeenCalled()
   })
 })
