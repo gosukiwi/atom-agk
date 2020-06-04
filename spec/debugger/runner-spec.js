@@ -85,11 +85,13 @@ describe('Runner', () => {
     it('sends breakpoints as commands to the broadcaster', () => {
       const [runner, , broadcaster, breakpoints] = buildRunner()
       breakpoints.breakpoints.push({ file: 'dummy.agc', line: 1 })
+      breakpoints.breakpoints.push({ file: 'foo.agc', line: 3 })
       spyOn(broadcaster, 'writeStdin')
 
       runner.start()
 
       expect(broadcaster.writeStdin).toHaveBeenCalledWith('breakpoint dummy.agc:1')
+      expect(broadcaster.writeStdin).toHaveBeenCalledWith('breakpoint foo.agc:3')
     })
   })
 })
