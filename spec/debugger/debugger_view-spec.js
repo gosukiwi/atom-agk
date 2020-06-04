@@ -4,7 +4,7 @@ import DebuggerView from '../../lib/debugger/debugger_view'
 describe('DebuggerView', () => {
   describe('.writeLine', () => {
     it('adds a new line to the output', () => {
-      const view = new DebuggerView()
+      const view = new DebuggerView({ started: false })
 
       view.writeLine('Hello, World!')
 
@@ -14,7 +14,7 @@ describe('DebuggerView', () => {
 
   describe('.clear', () => {
     it('clear the output', () => {
-      const view = new DebuggerView()
+      const view = new DebuggerView({ started: false })
 
       view.writeLine('Hello, World!')
       view.clear()
@@ -23,7 +23,7 @@ describe('DebuggerView', () => {
     })
 
     it('adds default text', () => {
-      const view = new DebuggerView()
+      const view = new DebuggerView({ started: false })
 
       view.clear()
 

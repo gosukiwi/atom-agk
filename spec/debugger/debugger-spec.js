@@ -46,7 +46,7 @@ describe('Debugger', () => {
 
   it('opens the view on atom://agk-debugger', () => {
     const disposables = new CompositeDisposable()
-    const view = new DebuggerView()
+    const view = new DebuggerView({ started: false })
     new Debugger({ subscriptions: disposables, view: view })
     spyOn(view, 'getDefaultLocation')
 
@@ -58,7 +58,7 @@ describe('Debugger', () => {
     const disposables = new CompositeDisposable()
     const breakpoints = new BreakpointManager(disposables)
     const runner = new Runner({ breakpoints })
-    const view = new DebuggerView()
+    const view = new DebuggerView({ started: false })
     new Debugger({ subscriptions: disposables, runner: runner, view: view })
     spyOn(runner, 'watch')
 
@@ -67,24 +67,24 @@ describe('Debugger', () => {
     expect(runner.watch).toHaveBeenCalledWith('foo')
   })
 
-  it('stops runner on view.onStopPressed', () => {
+  it('stops runner on view.onTogglePressed', () => {
     const disposables = new CompositeDisposable()
     const breakpoints = new BreakpointManager(disposables)
     const runner = new Runner({ breakpoints })
-    const view = new DebuggerView()
+    const view = new DebuggerView({ started: false })
     new Debugger({ subscriptions: disposables, runner: runner, view: view })
-    spyOn(runner, 'stop')
+    spyOn(runner, 'toggle')
 
-    view.emit('stop-pressed')
+    view.emit('toggle-pressed')
 
-    expect(runner.stop).toHaveBeenCalled()
+    expect(runner.toggle).toHaveBeenCalled()
   })
 
   it('continues runner on view.onContinuePressed', () => {
     const disposables = new CompositeDisposable()
     const breakpoints = new BreakpointManager(disposables)
     const runner = new Runner({ breakpoints })
-    const view = new DebuggerView()
+    const view = new DebuggerView({ started: false })
     new Debugger({ subscriptions: disposables, runner: runner, view: view })
     spyOn(runner, 'continue')
 
@@ -97,7 +97,7 @@ describe('Debugger', () => {
     const disposables = new CompositeDisposable()
     const breakpoints = new BreakpointManager(disposables)
     const runner = new Runner({ breakpoints })
-    const view = new DebuggerView()
+    const view = new DebuggerView({ started: false })
     const debugManager = new Debugger({ subscriptions: disposables, runner, view })
     spyOn(debugManager, 'highlightBreakpointIfNeeded')
 

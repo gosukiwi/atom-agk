@@ -132,4 +132,21 @@ describe('Runner', () => {
       expect(runner.started).toBe(false)
     })
   })
+
+  describe('.toggle', () => {
+    it('starts when stopped', () => {
+      const [runner] = buildRunner()
+      runner.toggle()
+
+      expect(runner.started).toBe(true)
+    })
+
+    it('stops when started', () => {
+      const [runner] = buildRunner()
+      runner.start()
+      runner.toggle()
+
+      expect(runner.started).toBe(false)
+    })
+  })
 })
