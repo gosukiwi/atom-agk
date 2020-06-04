@@ -22,7 +22,6 @@ utilities for compiling source code using AppGameKit Classic.
 * Add compiler info to console
 
 # Thanks
-Particular thanks to
+Particular thanks to the guys at TheGameCreators forums and in particular
 [MadBit](https://forum.thegamecreators.com/user/16e3dff53459a69a78e8c26031783c78)
-from TheGameCreators forums for all the help running the debugger and using the
-compiler from the CLI.
+for all the help running the debugger and using the compiler from the CLI.

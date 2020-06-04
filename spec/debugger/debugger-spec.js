@@ -54,7 +54,7 @@ describe('Debugger', () => {
     runs(() => expect(view.getDefaultLocation).toHaveBeenCalled())
   })
 
-  it('sends commands to runner.watch on view command entered', () => {
+  it('sends watch to runner on view.onCommandEntered', () => {
     const disposables = new CompositeDisposable()
     const breakpoints = new BreakpointManager(disposables)
     const runner = new Runner({ breakpoints })
@@ -65,6 +65,32 @@ describe('Debugger', () => {
     view.emit('command-entered', 'foo')
 
     expect(runner.watch).toHaveBeenCalledWith('foo')
+  })
+
+  it('stops runner on view.onStopPressed', () => {
+    const disposables = new CompositeDisposable()
+    const breakpoints = new BreakpointManager(disposables)
+    const runner = new Runner({ breakpoints })
+    const view = new DebuggerView()
+    new Debugger({ subscriptions: disposables, runner: runner, view: view })
+    spyOn(runner, 'stop')
+
+    view.emit('stop-pressed')
+
+    expect(runner.stop).toHaveBeenCalled()
+  })
+
+  it('continues runner on view.onContinuePressed', () => {
+    const disposables = new CompositeDisposable()
+    const breakpoints = new BreakpointManager(disposables)
+    const runner = new Runner({ breakpoints })
+    const view = new DebuggerView()
+    new Debugger({ subscriptions: disposables, runner: runner, view: view })
+    spyOn(runner, 'continue')
+
+    view.emit('continue-pressed')
+
+    expect(runner.continue).toHaveBeenCalled()
   })
 
   it('highlights breakpoint if needed', () => {
