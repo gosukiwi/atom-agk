@@ -5,6 +5,32 @@ import Process from '../lib/process'
 import Environment from '../lib/environment'
 
 describe('Compiler', () => {
+  describe('commands', () => {
+    it('binds atom-agk:toggle-debugger to .toggleDebuggerWindow', () => {
+      const subscriptions = new CompositeDisposable()
+      const process = Process.null()
+      const compiler = new Compiler({ subscriptions, process })
+      const workspaceElement = atom.views.getView(atom.workspace)
+      spyOn(compiler, 'compile')
+
+      atom.commands.dispatch(workspaceElement, 'atom-agk:compile')
+
+      expect(compiler.compile).toHaveBeenCalled()
+    })
+
+    it('binds "atom-agk:debug" to .debug', () => {
+      const subscriptions = new CompositeDisposable()
+      const process = Process.null()
+      const compiler = new Compiler({ subscriptions, process })
+      const workspaceElement = atom.views.getView(atom.workspace)
+      spyOn(compiler, 'compileAndRun')
+
+      atom.commands.dispatch(workspaceElement, 'atom-agk:compile-and-run')
+
+      expect(compiler.compileAndRun).toHaveBeenCalled()
+    })
+  })
+
   describe('.compile', () => {
     it('starts the compiler process with proper params', () => {
       const subscriptions = new CompositeDisposable()
