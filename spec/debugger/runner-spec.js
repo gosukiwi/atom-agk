@@ -1,79 +1,62 @@
 'use babel'
 import { CompositeDisposable } from 'atom'
-import { Readable, Writable } from 'stream'
-import { EventEmitter } from 'events'
 import Runner from '../../lib/debugger/runner'
 import BreakpointManager from '../../lib/debugger/breakpoint_manager'
-import Spawner from '../../lib/debugger/spawner'
+import Process from '../../lib/debugger/process'
 
-function mockProcess () {
-  const dummyProcess = new EventEmitter()
-  dummyProcess.stdin = new Writable({
-    write: jasmine.createSpy('write'),
-    final: jasmine.createSpy('final')
-  })
-  dummyProcess.stdin.setEncoding = jasmine.createSpy('setEncoding')
-  dummyProcess.stdout = new Readable({
-    read: jasmine.createSpy('read')
-  })
-  dummyProcess.stderr = new Readable({
-    read: jasmine.createSpy('read')
-  })
-  return dummyProcess
+function buildRunner () {
+  const disposables = new CompositeDisposable()
+  const interpreter = Process.null()
+  const broadcaster = Process.null()
+  const breakpoints = new BreakpointManager(disposables)
+  const runner = new Runner({ breakpoints: breakpoints, interpreter: interpreter, broadcaster: broadcaster })
+
+  return [runner, interpreter, broadcaster, breakpoints]
 }
 
 describe('Runner', () => {
-  describe('\\#start', () => {
+  describe('.start', () => {
     it('tries to spawn the interpreter', () => {
-      atom.config.set('atom-agk.agk_compiler_path', 'C:\\Foo\\bar')
-      const disposables = new CompositeDisposable()
-      const spawner = new Spawner()
-      const runner = new Runner(new BreakpointManager(disposables), spawner)
-      spyOn(spawner, 'spawn').andReturn(null)
+      const [runner, interpreter] = buildRunner()
+      spyOn(interpreter, 'start').andReturn(false)
 
       runner.start()
 
-      expect(spawner.spawn).toHaveBeenCalledWith('C:\\Foo\\interpreters\\Windows.exe')
+      expect(interpreter.start).toHaveBeenCalled()
     })
 
     it('halts when the interpreter fails to be spawned', () => {
-      atom.config.set('atom-agk.agk_compiler_path', 'C:\\Foo\\bar')
-      const disposables = new CompositeDisposable()
-      const spawner = new Spawner()
-      const runner = new Runner(new BreakpointManager(disposables), spawner)
-      spyOn(spawner, 'spawn').andReturn(null)
+      const [runner, interpreter, broadcaster] = buildRunner()
+      spyOn(interpreter, 'start').andReturn(false)
+      spyOn(broadcaster, 'start').andReturn(false)
 
       runner.start()
 
-      expect(spawner.spawn).toHaveBeenCalledWith('C:\\Foo\\interpreters\\Windows.exe')
-      expect(spawner.spawn).not.toHaveBeenCalledWith('C:\\Foo\\AGKBroadcaster.exe')
+      expect(interpreter.start).toHaveBeenCalled()
+      expect(broadcaster.start).not.toHaveBeenCalled()
     })
 
     it('tries to spawn the broadcaster if the interpreter was successfully spawned', () => {
-      atom.config.set('atom-agk.agk_compiler_path', 'C:\\Foo\\bar')
-      const disposables = new CompositeDisposable()
-      const spawner = new Spawner()
-      const runner = new Runner(new BreakpointManager(disposables), spawner)
-      spyOn(spawner, 'spawn').andCallFake((path, args) => {
-        if (path === 'C:\\Foo\\interpreters\\Windows.exe') return {}
-        return null
-      })
+      const [runner, , broadcaster] = buildRunner()
+      spyOn(broadcaster, 'start').andReturn(true)
 
       runner.start()
 
-      expect(spawner.spawn).toHaveBeenCalledWith('C:\\Foo\\interpreters\\Windows.exe')
-      expect(spawner.spawn).toHaveBeenCalledWith('C:\\Foo\\AGKBroadcaster.exe', ['-nowindow'])
+      expect(broadcaster.start).toHaveBeenCalled()
     })
 
-    it('does not mark as started if any process fails to spawn', () => {
-      atom.config.set('atom-agk.agk_compiler_path', 'C:\\Foo\\bar')
-      const disposables = new CompositeDisposable()
-      const spawner = new Spawner()
-      const runner = new Runner(new BreakpointManager(disposables), spawner)
-      spyOn(spawner, 'spawn').andCallFake((path, args) => {
-        if (path === 'C:\\Foo\\interpreters\\Windows.exe') return {}
-        return null
-      })
+    it('does not mark as started if the interpreter failed to spawn', () => {
+      const [runner, interpreter] = buildRunner()
+      spyOn(interpreter, 'start').andReturn(false)
+
+      runner.start()
+
+      expect(runner.started).toBe(false)
+    })
+
+    it('does not mark as started if the broadcaster failed to spawn', () => {
+      const [runner, , broadcaster] = buildRunner()
+      spyOn(broadcaster, 'start').andReturn(false)
 
       runner.start()
 
@@ -81,17 +64,32 @@ describe('Runner', () => {
     })
 
     it('marks as started if both processes spawn', () => {
-      atom.config.set('atom-agk.agk_compiler_path', 'C:\\Foo\\bar')
-      const disposables = new CompositeDisposable()
-      const spawner = new Spawner()
-      const runner = new Runner(new BreakpointManager(disposables), spawner)
-      spyOn(spawner, 'spawn').andReturn(mockProcess())
+      const [runner] = buildRunner()
 
       runner.start()
 
       expect(runner.started).toBe(true)
     })
 
-    it('sends initial commands to the broadcaster')
+    it('sends initial commands to the broadcaster', () => {
+      const [runner, , broadcaster] = buildRunner()
+      spyOn(broadcaster, 'writeStdin')
+
+      runner.start()
+
+      expect(broadcaster.writeStdin).toHaveBeenCalledWith(`setproject ${atom.project.getPaths()[0]}`)
+      expect(broadcaster.writeStdin).toHaveBeenCalledWith('connect 127.0.0.1')
+      expect(broadcaster.writeStdin).toHaveBeenCalledWith('debug')
+    })
+
+    it('sends breakpoints as commands to the broadcaster', () => {
+      const [runner, , broadcaster, breakpoints] = buildRunner()
+      breakpoints.breakpoints.push({ file: 'dummy.agc', line: 1 })
+      spyOn(broadcaster, 'writeStdin')
+
+      runner.start()
+
+      expect(broadcaster.writeStdin).toHaveBeenCalledWith('breakpoint dummy.agc:1')
+    })
   })
 })

@@ -43,7 +43,7 @@ describe('Debugger', () => {
   it('sends commands to runner\\#watch on view command entered', () => {
     const disposables = new CompositeDisposable()
     const breakpoints = new BreakpointManager(disposables)
-    const runner = new Runner(breakpoints)
+    const runner = new Runner({ breakpoints })
     const view = new DebuggerView()
     new Debugger({ subscriptions: disposables, runner: runner, view: view })
     spyOn(runner, 'watch')
@@ -57,7 +57,7 @@ describe('Debugger', () => {
     it('starts the runner', () => {
       const disposables = new CompositeDisposable()
       const breakpoints = new BreakpointManager(disposables)
-      const runner = new Runner(breakpoints)
+      const runner = new Runner({ breakpoints })
       const debugManager = new Debugger({ subscriptions: disposables, runner: runner })
       spyOn(runner, 'start')
 
