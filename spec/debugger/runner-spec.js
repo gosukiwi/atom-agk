@@ -2,7 +2,7 @@
 import { CompositeDisposable } from 'atom'
 import Runner from '../../lib/debugger/runner'
 import BreakpointManager from '../../lib/debugger/breakpoint_manager'
-import Process from '../../lib/debugger/process'
+import Process from '../../lib/process'
 
 function buildRunner () {
   const disposables = new CompositeDisposable()
