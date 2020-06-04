@@ -94,4 +94,42 @@ describe('Runner', () => {
       expect(broadcaster.writeStdin).toHaveBeenCalledWith('breakpoint foo.agc:3')
     })
   })
+
+  describe('.send', () => {
+    it('writes to broadcaster stdin', () => {
+      const [runner, , broadcaster] = buildRunner()
+      spyOn(broadcaster, 'writeStdin')
+
+      runner.start()
+      runner.send('hello, world!')
+
+      expect(broadcaster.writeStdin).toHaveBeenCalledWith('hello, world!')
+      expect(runner.started).toBe(true)
+    })
+
+    it('does not write to broadcaster stdin if stopped', () => {
+      const [runner, , broadcaster] = buildRunner()
+      spyOn(broadcaster, 'writeStdin')
+
+      runner.send('hello, world!')
+
+      expect(broadcaster.writeStdin).not.toHaveBeenCalled()
+      expect(runner.started).toBe(false)
+    })
+  })
+
+  describe('.stop', () => {
+    it('stops the processes', () => {
+      const [runner, interpreter, broadcaster] = buildRunner()
+      runner.start()
+      spyOn(interpreter, 'stop')
+      spyOn(broadcaster, 'stop')
+
+      runner.stop()
+
+      expect(interpreter.stop).toHaveBeenCalled()
+      expect(broadcaster.stop).toHaveBeenCalled()
+      expect(runner.started).toBe(false)
+    })
+  })
 })
