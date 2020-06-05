@@ -7,6 +7,10 @@
           "label": "atom-agk",
           "submenu": [
             {
+              "label": "Toggle AGK Terminal",
+              "command": "atom-agk:toggle-terminal"
+            },
+            {
               "label": "Compile",
               "command": "atom-agk:compile"
             },

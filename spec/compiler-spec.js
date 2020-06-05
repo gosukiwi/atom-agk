@@ -3,13 +3,22 @@ import { CompositeDisposable } from 'atom'
 import Compiler from '../lib/compiler'
 import Process from '../lib/process'
 import Environment from '../lib/environment'
+import Terminal from '../lib/terminal/terminal'
+
+function buildCompiler () {
+  const subscriptions = new CompositeDisposable()
+  const process = Process.null()
+  const env = new Environment()
+  const terminal = new Terminal(subscriptions)
+  const compiler = new Compiler({ subscriptions, process, env, terminal })
+
+  return { compiler, process, env, terminal }
+}
 
 describe('Compiler', () => {
   describe('commands', () => {
     it('binds atom-agk:toggle-debugger to .toggleDebuggerWindow', () => {
-      const subscriptions = new CompositeDisposable()
-      const process = Process.null()
-      const compiler = new Compiler({ subscriptions, process })
+      const { compiler } = buildCompiler()
       const workspaceElement = atom.views.getView(atom.workspace)
       spyOn(compiler, 'compile')
 
@@ -19,9 +28,7 @@ describe('Compiler', () => {
     })
 
     it('binds "atom-agk:debug" to .debug', () => {
-      const subscriptions = new CompositeDisposable()
-      const process = Process.null()
-      const compiler = new Compiler({ subscriptions, process })
+      const { compiler } = buildCompiler()
       const workspaceElement = atom.views.getView(atom.workspace)
       spyOn(compiler, 'compileAndRun')
 
@@ -33,10 +40,7 @@ describe('Compiler', () => {
 
   describe('.compile', () => {
     it('starts the compiler process with proper params', () => {
-      const subscriptions = new CompositeDisposable()
-      const process = Process.null()
-      const env = new Environment()
-      const compiler = new Compiler({ subscriptions, process, env })
+      const { compiler, env, process } = buildCompiler()
       spyOn(env, 'projectPath').andReturn('C:\\MyProject')
       spyOn(env, 'compilerPath').andReturn('C:\\Compiler.exe')
       spyOn(process, 'start')
@@ -54,10 +58,7 @@ describe('Compiler', () => {
 
   describe('.compileAndRun', () => {
     it('starts the compiler process with proper params', () => {
-      const subscriptions = new CompositeDisposable()
-      const process = Process.null()
-      const env = new Environment()
-      const compiler = new Compiler({ subscriptions, process, env })
+      const { compiler, env, process } = buildCompiler()
       spyOn(env, 'projectPath').andReturn('C:\\MyProject')
       spyOn(env, 'compilerPath').andReturn('C:\\Compiler.exe')
       spyOn(process, 'start')
@@ -74,9 +75,7 @@ describe('Compiler', () => {
   })
 
   it('calls onCompilationSucceeded callbacks on process.onClose', () => {
-    const subscriptions = new CompositeDisposable()
-    const process = Process.null()
-    const compiler = new Compiler({ subscriptions, process })
+    const { compiler, process } = buildCompiler()
     let callbackCalled = false
     compiler.onCompilationSucceeded(() => { callbackCalled = true })
 
@@ -86,9 +85,7 @@ describe('Compiler', () => {
   })
 
   it('calls onCompilationFailed callbacks on process.onStdout', () => {
-    const subscriptions = new CompositeDisposable()
-    const process = Process.null()
-    const compiler = new Compiler({ subscriptions, process })
+    const { compiler, process } = buildCompiler()
     let callbackCalled = false
     compiler.onCompilationFailed(() => { callbackCalled = true })
 

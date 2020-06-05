@@ -4,15 +4,15 @@ import Terminal from '../../lib/terminal/terminal'
 
 describe('Terminal', () => {
   describe('commands', () => {
-    it('binds atom-agk:toggle-debugger to .toggleDebuggerWindow', () => {
+    it('binds atom-agk:toggle-terminal to .toggleTerminalWindow', () => {
       const subscriptions = new CompositeDisposable()
       const terminal = new Terminal(subscriptions)
       const workspaceElement = atom.views.getView(atom.workspace)
-      spyOn(terminal, 'toggleDebuggerWindow')
+      spyOn(terminal, 'toggleTerminalWindow')
 
-      atom.commands.dispatch(workspaceElement, 'atom-agk:toggle-debugger')
+      atom.commands.dispatch(workspaceElement, 'atom-agk:toggle-terminal')
 
-      expect(terminal.toggleDebuggerWindow).toHaveBeenCalled()
+      expect(terminal.toggleTerminalWindow).toHaveBeenCalled()
     })
   })
 
