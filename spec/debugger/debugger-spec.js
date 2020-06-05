@@ -2,6 +2,8 @@
 import { CompositeDisposable } from 'atom'
 import Debugger from '../../lib/debugger/debugger'
 import Runner from '../../lib/debugger/runner'
+import Process from '../../lib/process'
+import Compiler from '../../lib/compiler'
 import BreakpointManager from '../../lib/debugger/breakpoint_manager'
 import DebuggerView from '../../lib/debugger/debugger_view'
 
@@ -33,14 +35,19 @@ describe('Debugger', () => {
   describe('.debug', () => {
     it('starts the runner', () => {
       const disposables = new CompositeDisposable()
+      const process = Process.null()
+      const compiler = new Compiler({ subscriptions: disposables, process })
       const breakpoints = new BreakpointManager(disposables)
       const runner = new Runner({ breakpoints })
-      const debugManager = new Debugger({ subscriptions: disposables, runner: runner })
+      const debugManager = new Debugger({ subscriptions: disposables, compiler, runner })
       spyOn(runner, 'start')
 
-      debugManager.debug()
+      waitsForPromise(() => atom.workspace.open('foo.agc'))
+      waitsForPromise(() => debugManager.debug())
 
-      expect(runner.start).toHaveBeenCalled()
+      runs(() => {
+        expect(runner.start).toHaveBeenCalled()
+      })
     })
   })
 
