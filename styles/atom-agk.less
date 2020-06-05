@@ -29,13 +29,20 @@ atom-text-editor .gutter .line-number.agk-debugger-breakpoint {
 
   &__output {
     flex-grow: 1;
+    display: flex;
+    flex-direction: column-reverse;
     background-color: #111;
     color: @text-color-subtle;
     font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;
-    list-style: none;
     padding: .5rem;
     margin: 0;
     overflow: auto;
+
+    ul {
+      padding: 0;
+      margin: 0;
+      list-style: none;
+    }
   }
 
   &__prompt {

@@ -46,7 +46,7 @@ describe('Debugger', () => {
 
   it('opens the view on atom://agk-debugger', () => {
     const disposables = new CompositeDisposable()
-    const view = new DebuggerView({ started: false })
+    const view = new DebuggerView()
     new Debugger({ subscriptions: disposables, view: view })
     spyOn(view, 'getDefaultLocation')
 
@@ -58,7 +58,7 @@ describe('Debugger', () => {
     const disposables = new CompositeDisposable()
     const breakpoints = new BreakpointManager(disposables)
     const runner = new Runner({ breakpoints })
-    const view = new DebuggerView({ started: false })
+    const view = new DebuggerView()
     new Debugger({ subscriptions: disposables, runner: runner, view: view })
     spyOn(runner, 'watch')
 
@@ -71,7 +71,7 @@ describe('Debugger', () => {
     const disposables = new CompositeDisposable()
     const breakpoints = new BreakpointManager(disposables)
     const runner = new Runner({ breakpoints })
-    const view = new DebuggerView({ started: false })
+    const view = new DebuggerView()
     new Debugger({ subscriptions: disposables, runner: runner, view: view })
     spyOn(runner, 'toggle')
 
@@ -84,7 +84,7 @@ describe('Debugger', () => {
     const disposables = new CompositeDisposable()
     const breakpoints = new BreakpointManager(disposables)
     const runner = new Runner({ breakpoints })
-    const view = new DebuggerView({ started: false })
+    const view = new DebuggerView()
     new Debugger({ subscriptions: disposables, runner: runner, view: view })
     spyOn(runner, 'continue')
 
@@ -97,7 +97,7 @@ describe('Debugger', () => {
     const disposables = new CompositeDisposable()
     const breakpoints = new BreakpointManager(disposables)
     const runner = new Runner({ breakpoints })
-    const view = new DebuggerView({ started: false })
+    const view = new DebuggerView()
     const debugManager = new Debugger({ subscriptions: disposables, runner, view })
     spyOn(debugManager, 'highlightBreakpointIfNeeded')
 
