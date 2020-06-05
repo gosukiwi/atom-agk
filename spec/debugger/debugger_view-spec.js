@@ -27,7 +27,7 @@ describe('DebuggerView', () => {
 
       view.clear()
 
-      expect(view.getElement().querySelector('.agk-debugger__output').innerHTML).toContain('AGK Debugger Console. Not connected.')
+      expect(view.getElement().querySelector('.agk-debugger__output ul').innerHTML).toBe('')
     })
   })
 })
