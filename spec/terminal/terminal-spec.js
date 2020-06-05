@@ -20,31 +20,11 @@ describe('Terminal', () => {
     it('adds a new line to the output', () => {
       const subscriptions = new CompositeDisposable()
       const terminal = new Terminal(subscriptions)
+      spyOn(terminal.view, 'write')
 
       terminal.write('Hello, World!')
 
-      expect(terminal.view.state.console).toContain('Hello, World!')
-    })
-  })
-
-  describe('.clear', () => {
-    it('clear the output', () => {
-      const subscriptions = new CompositeDisposable()
-      const terminal = new Terminal(subscriptions)
-
-      terminal.write('Hello, World!')
-      terminal.clear()
-
-      expect(terminal.view.state.console).not.toContain('Hello, World!')
-    })
-
-    it('adds default text', () => {
-      const subscriptions = new CompositeDisposable()
-      const terminal = new Terminal(subscriptions)
-
-      terminal.clear()
-
-      expect(terminal.getElement().querySelector('.agk-debugger__output ul').innerHTML).toBe('')
+      expect(terminal.view.write).toHaveBeenCalled()
     })
   })
 
