@@ -124,6 +124,7 @@ describe('Runner', () => {
       runner.start()
       spyOn(interpreter, 'stop')
       spyOn(broadcaster, 'stop')
+      expect(runner.started).toBe(true)
 
       runner.stop()
 
