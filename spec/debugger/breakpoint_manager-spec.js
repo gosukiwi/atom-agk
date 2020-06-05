@@ -34,4 +34,21 @@ describe('BreakpointManager', () => {
       })
     })
   })
+
+  describe('.add', () => {
+    it('destroys the breakpoint when the marker is destroyed', () => {
+      const subscriptions = new CompositeDisposable()
+      const manager = new BreakpointManager(subscriptions)
+      waitsForPromise(() => atom.workspace.open('foo.agc'))
+      runs(() => {
+        manager.toggle()
+        expect(manager.breakpoints.length).toBe(1)
+        const marker = atom.workspace.getActiveTextEditor().findMarkers({ startBufferRow: 0 })[0]
+
+        marker.destroy()
+
+        expect(manager.breakpoints.length).toBe(0)
+      })
+    })
+  })
 })
