@@ -1,16 +1,4 @@
 {
-  "context-menu": {
-    "atom-text-editor": [
-      {
-        "label": "AGK: Compile",
-        "command": "atom-agk:compile"
-      },
-      {
-        "label": "AGK: Compile and Run",
-        "command": "atom-agk:compile-and-run"
-      }
-    ]
-  },
   "menu": [
     {
       "label": "Packages",
@@ -25,6 +13,14 @@
             {
               "label": "Compile and Run",
               "command": "atom-agk:compile-and-run"
+            },
+            {
+              "label": "Debug",
+              "command": "atom-agk:debug"
+            },
+            {
+              "label": "Toggle breakpoint in current line",
+              "command": "atom-agk:toggle-breakpoint"
             }
           ]
         }
