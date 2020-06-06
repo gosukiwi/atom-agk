@@ -94,12 +94,21 @@ describe('Compiler', () => {
     expect(callbackCalled).toBe(true)
   })
 
-  it('calls compile on terminal.onCompileButtonClicked', () => {
+  it('calls "compile" on terminal.onCompileButtonClicked', () => {
     const { compiler, terminal } = buildCompiler()
     spyOn(compiler, 'compile')
 
     terminal.emit('compile-pressed')
 
     expect(compiler.compile).toHaveBeenCalled()
+  })
+
+  it('calls "compileAndRun" on terminal.onRunButtonClicked', () => {
+    const { compiler, terminal } = buildCompiler()
+    spyOn(compiler, 'compileAndRun')
+
+    terminal.emit('run-pressed')
+
+    expect(compiler.compileAndRun).toHaveBeenCalled()
   })
 })
