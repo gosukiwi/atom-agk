@@ -5,5 +5,8 @@
     "ctrl-f6": "atom-agk:debug",
     "ctrl-f7": "atom-agk:compile",
     "ctrl-f8": "atom-agk:toggle-terminal"
+  },
+  "editor": {
+    "f1": "atom-agk:open-definition"
   }
 }

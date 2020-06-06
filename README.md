@@ -19,7 +19,6 @@ utilities for compiling source code using AppGameKit Classic.
 * Intellisense (?)
 * Built-in test runner
 * Add help command in debugger
-* Add compiler info to console
 
 # Thanks
 Particular thanks to the guys at TheGameCreators forums and in particular
