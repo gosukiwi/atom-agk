@@ -10,10 +10,10 @@ import Terminal from '../../lib/terminal/terminal'
 function buildDebugger () {
   const subscriptions = new CompositeDisposable()
   const process = Process.null()
-  const compiler = new Compiler({ subscriptions, process })
+  const terminal = new Terminal(subscriptions)
+  const compiler = new Compiler({ subscriptions, process, terminal })
   const breakpoints = new BreakpointManager(subscriptions)
   const runner = new Runner({ breakpoints })
-  const terminal = new Terminal(subscriptions)
   const debugManager = new Debugger({ subscriptions, compiler, runner, terminal })
 
   return { compiler, runner, terminal, debugManager }

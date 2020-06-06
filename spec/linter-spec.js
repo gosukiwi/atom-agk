@@ -3,13 +3,15 @@ import { CompositeDisposable } from 'atom'
 import Linter from '../lib/linter'
 import Compiler from '../lib/compiler'
 import Environment from '../lib/environment'
+import Terminal from '../lib/terminal/terminal'
 
 describe('Linter', () => {
   describe('.lint', () => {
     it('calls setMessages on the linter service', () => {
       const environment = new Environment()
       const subscriptions = new CompositeDisposable()
-      const compiler = new Compiler({ subscriptions })
+      const terminal = new Terminal(subscriptions)
+      const compiler = new Compiler({ subscriptions, terminal })
       const service = { setMessages: jasmine.createSpy('setMessages') }
       const linter = new Linter({ linter: service, compiler, environment })
       spyOn(environment, 'projectPath').andReturn('C:\\Foo')
