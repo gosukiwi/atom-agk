@@ -8,17 +8,12 @@ utilities for compiling source code using AppGameKit Classic.
 * Syntax highlighting
 * Compile and run AGK projects
 * Debugger using breakpoints and REPL
+* Autocomplete functions, types, globals and variables [WIP]
+* Open help when pressing F1 in a built-in function [WIP]
 
 # Notes
 * Only tested in Windows
 * Only works with AGK Classic as Studio doesn't expose the compiler executable
-
-# TODO
-* Open help when pressing F1 in a built-in function
-* Autocomplete built-in functions
-* Intellisense (?)
-* Built-in test runner
-* Add help command in debugger
 
 # Thanks
 Particular thanks to the guys at TheGameCreators forums and in particular
