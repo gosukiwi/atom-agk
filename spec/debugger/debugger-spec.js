@@ -57,7 +57,7 @@ describe('Debugger', () => {
     const { runner, terminal } = buildDebugger()
     spyOn(runner, 'watch')
 
-    terminal.emit('command-entered', 'foo')
+    terminal.view.emit('command-entered', 'foo')
 
     expect(runner.watch).toHaveBeenCalledWith('foo')
   })
@@ -66,7 +66,7 @@ describe('Debugger', () => {
     const { runner, terminal } = buildDebugger()
     spyOn(runner, 'toggle')
 
-    terminal.emit('toggle-pressed')
+    terminal.view.emit('toggle-pressed')
 
     expect(runner.toggle).toHaveBeenCalled()
   })
@@ -75,7 +75,7 @@ describe('Debugger', () => {
     const { runner, terminal } = buildDebugger()
     spyOn(runner, 'continue')
 
-    terminal.emit('continue-pressed')
+    terminal.view.emit('continue-pressed')
 
     expect(runner.continue).toHaveBeenCalled()
   })

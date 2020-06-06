@@ -98,7 +98,7 @@ describe('Compiler', () => {
     const { compiler, terminal } = buildCompiler()
     spyOn(compiler, 'compile')
 
-    terminal.emit('compile-pressed')
+    terminal.view.emit('compile-pressed')
 
     expect(compiler.compile).toHaveBeenCalled()
   })
@@ -107,7 +107,7 @@ describe('Compiler', () => {
     const { compiler, terminal } = buildCompiler()
     spyOn(compiler, 'compileAndRun')
 
-    terminal.emit('run-pressed')
+    terminal.view.emit('run-pressed')
 
     expect(compiler.compileAndRun).toHaveBeenCalled()
   })
