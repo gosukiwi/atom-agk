@@ -16,7 +16,8 @@
     "atom": ">=1.0.0 <2.0.0"
   },
   "dependencies": {
-    "etch": "^0.14.0"
+    "etch": "^0.14.0",
+    "glob": "^7.1.6"
   },
   "consumedServices": {
     "linter-indie": {
