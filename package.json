@@ -1,6 +1,6 @@
 {
   "name": "atom-agk",
-  "main": "./lib/atom-agk",
+  "main": "./lib/main",
   "version": "0.0.0",
   "description": "AppGameKit support from Atom.",
   "keywords": [
@@ -22,6 +22,13 @@
     "linter-indie": {
       "versions": {
         "2.0.0": "consumeIndie"
+      }
+    }
+  },
+  "providedServices": {
+    "autocomplete.provider": {
+      "versions": {
+        "4.0.0": "provide"
       }
     }
   },
