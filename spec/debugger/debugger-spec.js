@@ -62,13 +62,13 @@ describe('Debugger', () => {
     expect(runner.watch).toHaveBeenCalledWith('foo')
   })
 
-  it('stops runner on terminal.onTogglePressed', () => {
-    const { runner, terminal } = buildDebugger()
-    spyOn(runner, 'toggle')
+  it('toggles when terminal.onTogglePressed', () => {
+    const { debugManager, terminal } = buildDebugger()
+    spyOn(debugManager, 'toggle')
 
     terminal.view.emit('toggle-pressed')
 
-    expect(runner.toggle).toHaveBeenCalled()
+    expect(debugManager.toggle).toHaveBeenCalled()
   })
 
   it('continues runner on terminal.onContinuePressed', () => {
