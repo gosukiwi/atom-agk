@@ -11,7 +11,7 @@ and a REPL-oriented debugger.
 * Compile and run AGK projects
 * Debugger using breakpoints and REPL
 * Autocomplete functions, types, globals and variables [WIP]
-* Open help when pressing F1 in a built-in function [WIP]
+* Open help when pressing F1 in a built-in function
 
 # Notes
 * Only tested in Windows
