@@ -1,6 +1,8 @@
 # atom-agk package
-This plugin adds support for the AppGameKit Tier 1 (BASIC) language as well as
-utilities for compiling source code using AppGameKit Classic.
+Use Atom to develop games with AppGameKit! This plugin adds support for the
+AppGameKit Tier 1 (BASIC) language and all the utilities you'd expect from a
+modern editor, such as syntax highlighting, intellisense, on-demand compilation,
+and a REPL-oriented debugger.
 
 ![A screenshot of your package](https://f.cloud.github.com/assets/69169/2290250/c35d867a-a017-11e3-86be-cd7c5bf3ff9b.gif)
 
