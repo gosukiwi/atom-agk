@@ -1,12 +1,10 @@
 {
   "atom-workspace": {
-    "ctrl-f1": "atom-agk:toggle-breakpoint",
-    "ctrl-f5": "atom-agk:compile-and-run",
-    "ctrl-f6": "atom-agk:debug",
-    "ctrl-f7": "atom-agk:compile",
-    "ctrl-f8": "atom-agk:toggle-terminal"
-  },
-  "editor": {
-    "f1": "atom-agk:open-definition"
+    "f1": "atom-agk:open-definition",
+    "f4": "atom-agk:toggle-breakpoint",
+    "f5": "atom-agk:compile-and-run",
+    "f6": "atom-agk:debug",
+    "f7": "atom-agk:compile",
+    "f8": "atom-agk:toggle-terminal"
   }
 }
