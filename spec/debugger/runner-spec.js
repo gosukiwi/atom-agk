@@ -3,13 +3,16 @@ import { CompositeDisposable } from 'atom'
 import Runner from '../../lib/debugger/runner'
 import BreakpointManager from '../../lib/debugger/breakpoint_manager'
 import Process from '../../lib/process'
+import Environment from '../../lib/environment'
 
 function buildRunner () {
   const disposables = new CompositeDisposable()
   const interpreter = Process.null()
   const broadcaster = Process.null()
   const breakpoints = new BreakpointManager(disposables)
-  const runner = new Runner({ breakpoints: breakpoints, interpreter: interpreter, broadcaster: broadcaster })
+  const environment = new Environment()
+  const runner = new Runner({ breakpoints, interpreter, broadcaster, environment })
+  spyOn(environment, 'compilerPath').andReturn('C:\\Foo\\AGKCompiler.exe')
 
   return [runner, interpreter, broadcaster, breakpoints]
 }

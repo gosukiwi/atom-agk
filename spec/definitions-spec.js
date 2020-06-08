@@ -1,16 +1,12 @@
 'use babel'
 import { CompositeDisposable } from 'atom'
-import Definitions from '../lib/definitions'
-import path from 'path'
+// import { fixture } from './spec-helper'
+import DefinitionOpener from '../lib/definition-opener'
 
-function fixture (name) {
-  return path.join(__dirname, 'fixtures', name)
-}
-
-describe('Definitions', () => {
+describe('DefinitionOpener', () => {
   it('calls open when atom-agk:open-definition', () => {
     const subscriptions = new CompositeDisposable()
-    const definitions = new Definitions(subscriptions)
+    const definitions = new DefinitionOpener(subscriptions)
     const workspaceElement = atom.views.getView(atom.workspace)
     spyOn(definitions, 'open')
 
@@ -22,7 +18,7 @@ describe('Definitions', () => {
   //describe('.open', () => {
   //  it('tries to get the word under cursor', () => {
   //    const subscriptions = new CompositeDisposable()
-  //    const definitions = new Definitions(subscriptions)
+  //    const definitions = new DefinitionOpener(subscriptions)
   //    spyOn(definitions, 'getWordAtColumn')
   //    atom.workspace.open(fixture('demo.agc')).then((editor) => {
   //      editor.setCursorBufferPosition([1, 2])
@@ -37,7 +33,7 @@ describe('Definitions', () => {
   describe('.getWordAtColumn', () => {
     it('finds the proper word', () => {
       const subscriptions = new CompositeDisposable()
-      const definitions = new Definitions(subscriptions)
+      const definitions = new DefinitionOpener(subscriptions)
 
       const match = definitions.getWordAtColumn('  Print()', 2)
 
