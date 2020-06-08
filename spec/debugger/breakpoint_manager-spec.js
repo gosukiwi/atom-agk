@@ -21,11 +21,11 @@ describe('BreakpointManager', () => {
       const subscriptions = new CompositeDisposable()
       const manager = new BreakpointManager(subscriptions)
 
-      waitsForPromise(() => atom.workspace.open('foo.agc'))
+      waitsForPromise(() => atom.workspace.open('demo.agc'))
       runs(() => {
         manager.toggle()
         expect(manager.breakpoints.length).toBe(1)
-        expect(manager.breakpoints[0].file).toBe('foo.agc')
+        expect(manager.breakpoints[0].file).toBe('demo.agc')
         expect(manager.breakpoints[0].line).toBe(0)
         expect(manager.breakpoints[0].decoration).toBeDefined()
 
@@ -39,7 +39,7 @@ describe('BreakpointManager', () => {
     it('destroys the breakpoint when the marker is destroyed', () => {
       const subscriptions = new CompositeDisposable()
       const manager = new BreakpointManager(subscriptions)
-      waitsForPromise(() => atom.workspace.open('foo.agc'))
+      waitsForPromise(() => atom.workspace.open('demo.agc'))
       runs(() => {
         manager.toggle()
         expect(manager.breakpoints.length).toBe(1)

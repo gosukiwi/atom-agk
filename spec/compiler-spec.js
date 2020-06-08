@@ -45,7 +45,7 @@ describe('Compiler', () => {
       spyOn(env, 'compilerPath').andReturn('C:\\Compiler.exe')
       spyOn(process, 'start')
 
-      waitsForPromise(() => atom.workspace.open('foo.agc'))
+      waitsForPromise(() => atom.workspace.open('demo.agc'))
       waitsForPromise(() => compiler.compile())
 
       runs(() => {
@@ -63,7 +63,7 @@ describe('Compiler', () => {
       spyOn(env, 'compilerPath').andReturn('C:\\Compiler.exe')
       spyOn(process, 'start')
 
-      waitsForPromise(() => atom.workspace.open('foo.agc'))
+      waitsForPromise(() => atom.workspace.open('demo.agc'))
       waitsForPromise(() => compiler.compileAndRun())
 
       runs(() => {

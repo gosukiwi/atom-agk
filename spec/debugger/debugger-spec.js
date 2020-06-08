@@ -45,7 +45,7 @@ describe('Debugger', () => {
     // it('starts the runner', () => {
     //   const { debugManager, runner } = buildDebugger()
     //   spyOn(runner, 'start')
-    //   waitsForPromise(() => atom.workspace.open('foo.agc'))
+    //   waitsForPromise(() => atom.workspace.open('demo.agc'))
     //   waitsForPromise(() => debugManager.start())
     //   runs(() => {
     //     expect(runner.start).toHaveBeenCalled()
@@ -84,7 +84,7 @@ describe('Debugger', () => {
     const { runner, debugManager } = buildDebugger()
     spyOn(debugManager, 'highlightBreakpointIfNeeded')
 
-    runner.out('< Break:foo.agc:3 Some More Text')
+    runner.out('< Break:demo.agc:3 Some More Text')
 
     expect(debugManager.highlightBreakpointIfNeeded).toHaveBeenCalled()
   })
