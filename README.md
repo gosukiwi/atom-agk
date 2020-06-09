@@ -1,21 +1,30 @@
-# atom-agk package
-Use Atom to develop games with AppGameKit! This plugin adds support for the
-AppGameKit Tier 1 (BASIC) language and all the utilities you'd expect from a
-modern editor, such as syntax highlighting, intellisense, on-demand compilation,
-and a REPL-oriented debugger.
+# AppGameKit for Atom
+Use Atom to develop games with [AppGameKit](https://www.appgamekit.com/)!
+This plugin adds support for the AppGameKit Tier 1 (BASIC) language and all the
+utilities you'd expect from a modern editor, such as syntax highlighting,
+intellisense, on-demand compilation, and a REPL-oriented debugger.
 
-![A screenshot of your package](https://f.cloud.github.com/assets/69169/2290250/c35d867a-a017-11e3-86be-cd7c5bf3ff9b.gif)
+![Demo GIF](img/demo.gif)
 
-# Features
+# Features at a glance
 * Syntax highlighting
-* Compile and run AGK projects
+* Intellisense, autocomplete functions, types and globals
+* Compile and run
 * Debugger using breakpoints and REPL
-* Autocomplete functions, types, globals and variables [WIP]
 * Open help when pressing F1 in a built-in function
+* New project generator
+
+# Generating a new project
+Simply `ctrl-shift-p` (`cmd-shift-p` on macOS) and run `generate-project` from
+there. That will create a new folder at your specified location with a basic AGK
+project skeleton so you can start hacking right away!
 
 # Notes
-* Only tested in Windows
-* Only works with AGK Classic as Studio doesn't expose the compiler executable
+This is beta-quality software. Pull requests and suggestions are welcome. Some
+things to note:
+
+* Only been tested in Windows, it will most likely break on other platforms
+* Only works with AGK Classic, as Studio doesn't expose the compiler executable
 
 # Thanks
 Particular thanks to the guys at TheGameCreators forums and in particular
