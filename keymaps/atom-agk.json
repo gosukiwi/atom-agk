@@ -1,5 +1,5 @@
 {
-  "atom-workspace": {
+  "atom-text-editor[data-grammar='source agk']": {
     "f1": "atom-agk:open-definition",
     "f4": "atom-agk:toggle-breakpoint",
     "f5": "atom-agk:compile-and-run",
