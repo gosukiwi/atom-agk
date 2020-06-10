@@ -9,5 +9,8 @@
   "globals": {
     "atom": "readonly",
     "waitsForPromise": "readonly"
+  },
+  "rules": {
+    "no-new": "off"
   }
 }
