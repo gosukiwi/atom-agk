@@ -19,6 +19,17 @@ Simply `ctrl-shift-p` (`cmd-shift-p` on macOS) and run `generate-project` from
 there. That will create a new folder at your specified location with a basic AGK
 project skeleton so you can start hacking right away!
 
+# Default key bindings
+These bindings only apply when editing AGK (`.agc`) files, and can be changed in
+the package configuration. By default:
+
+* F1: Open documentation for built-in function under cursor, or documenation home if the function was not found (`atom-agk:open-definition`)
+* F4: Toggle debugger breakpoint in current line (`atom-agk:toggle-breakpoint`)
+* F5: Compile project and run (`atom-agk:compile-and-run`)
+* F6: Compile project and run in debug mode (`atom-agk:debug`)
+* F7: Compile project (`atom-agk:compile`)
+* F8: Toggle the debugger terminal (`atom-agk:toggle-terminal`)
+
 # Notes
 This is beta-quality software. Pull requests and suggestions are welcome. Some
 things to note:
