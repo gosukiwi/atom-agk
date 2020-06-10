@@ -1,3 +1,3 @@
-Function Foo
+Function Foo()
   Print("Hi")
 EndFunction
