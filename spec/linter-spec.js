@@ -16,18 +16,16 @@ describe('Linter', () => {
       const linter = new Linter({ linter: service, compiler, environment })
       spyOn(environment, 'projectPath').andReturn('C:\\Foo')
 
-      waitsForPromise(() => linter.lint({ file: 'bar.agc', line: 1, message: 'Hello, World!' }))
+      linter.lint('bar.agc', [{ line: 1, excerpt: 'Hello, World!' }])
 
-      runs(() => {
-        expect(service.setMessages).toHaveBeenCalledWith('C:\\Foo\\bar.agc', [{
-          severity: 'error',
-          location: {
-            file: 'C:\\Foo\\bar.agc',
-            position: [[0, 0], [0, 0]]
-          },
-          excerpt: 'Hello, World!'
-        }])
-      })
+      expect(service.setMessages).toHaveBeenCalledWith('C:\\Foo\\bar.agc', [{
+        severity: 'error',
+        location: {
+          file: 'C:\\Foo\\bar.agc',
+          position: [[0, 0], [0, 240]]
+        },
+        excerpt: 'Hello, World!'
+      }])
     })
   })
 })
