@@ -8,7 +8,7 @@ intellisense, on-demand compilation, and a REPL-oriented debugger.
 
 # Features at a glance
 * Syntax highlighting
-* Intellisense, autocomplete functions, types and globals
+* Autocomplete for functions, types, constants and globals
 * Compile and run
 * Debugger using breakpoints and REPL
 * Open help when pressing F1 in a built-in function
@@ -31,8 +31,8 @@ the package configuration. By default:
 * F8: Toggle the debugger terminal (`atom-agk:toggle-terminal`)
 
 # Notes
-This is beta-quality software. Pull requests and suggestions are welcome. Some
-things to note:
+This is beta-quality software. Pull requests, bug reports and suggestions are
+welcome. Some things to note:
 
 * Only been tested in Windows, it will most likely break on other platforms
 * Only works with AGK Classic, as Studio doesn't expose the compiler executable
