@@ -24,15 +24,11 @@ patterns: [
     name: 'constant.language.agk'
   }
   {
-    match: '(?i)(\\d+)(\\.\\d+)?'
-    name: 'constant.numeric.agk'
-  }
-  {
     match: '"([^"]|\\")*"'
     name: 'string.quoted.double.agk'
   }
   {
-    match: '(?i)\\b(type)\\s+([a-zA-Z_]+)\\b' # A regular expression that matches some content. Optional.
+    match: '(?i)\\b(type)\\s+([a-zA-Z_]+)\\b'
     captures:
       1:
         name: 'keyword.other.agk'
@@ -66,13 +62,13 @@ patterns: [
         name: 'support.function.agk'
   }
   {
-    match: '\\b([a-zA-Z_]+)\\('
+    match: '\\b([a-zA-Z0-9_]+)\\('
     captures:
       1:
         name: 'entity.name.function.agk'
   }
   {
-    match: '(?i)\\b(end|goto|gosub|return|function|exitfunction|do|loop|repeat|until|while|endwhile|for|step|next|exit|continue|if|else|elseif|endif|select|case|case\\s+default|endcase|endselect)\\b'
+    match: '(?i)\\b(end|goto|gosub|return|function|exitfunction|do|loop|repeat|until|while|endwhile|for|step|next|exit|continue|if|then|else|elseif|endif|select|case|case\\s+default|endcase|endselect)\\b'
     name: 'keyword.control.agk' # A period-delimited list of classes that will be applied to the content identified by `match`. Optional.
   }
   {
@@ -86,5 +82,9 @@ patterns: [
   {
     match: '(=|\\+|-|>|<)'
     name: 'keyword.operator.agk'
+  }
+  {
+    match: '(?i)\\b(\\d+)(\\.\\d+)?'
+    name: 'constant.numeric.agk'
   }
 ]
