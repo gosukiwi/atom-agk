@@ -8,7 +8,7 @@ intellisense, on-demand compilation, and a REPL-oriented debugger.
 
 # Features at a glance
 * Syntax highlighting
-* Autocomplete for functions, types, constants and globals
+* Autocomplete for functions, types, constants, globals and variables
 * Compile and run
 * Debugger using breakpoints and REPL
 * Open help when pressing F1 in a built-in function
