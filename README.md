@@ -14,6 +14,14 @@ intellisense, on-demand compilation, and a REPL-oriented debugger.
 * Open help when pressing F1 in a built-in function
 * New project generator
 
+# Installation
+Install it like any other package, just `ctrl-,`, go to packages, search for
+`atom-agk`, and that's it!
+
+You may need to customize the path to your `AGKCompiler.exe` file:
+
+![Settings window](img/setting.png)
+
 # Generating a new project
 Simply `ctrl-shift-p` (`cmd-shift-p` on macOS) and run `generate-project` from
 there. That will create a new folder at your specified location with a basic AGK
