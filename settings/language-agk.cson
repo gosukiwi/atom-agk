@@ -1,5 +1,7 @@
 '.source.agk':
   'editor':
+    'commentStart': '// '
+    'autoIndentOnPaste': false
     'increaseIndentPattern': '(?xi)
       ^\\s*
       (
