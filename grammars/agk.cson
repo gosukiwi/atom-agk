@@ -17,7 +17,7 @@ patterns: [
     name: 'comment.block.agk'
   }
   {
-    match: '(?i)(//|rem)[^\\n]*$' # A regular expression that matches some content. Optional.
+    match: '(?i)(//|rem|`)[^\\n]*$' # A regular expression that matches some content. Optional.
     name: 'comment.line.double-slash.agk' # A period-delimited list of classes that will be applied to the content identified by `match`. Optional.
   }
   {
