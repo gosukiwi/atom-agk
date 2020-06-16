@@ -68,7 +68,7 @@ patterns: [
         name: 'entity.name.function.agk'
   }
   {
-    match: '(?i)\\b(end|goto|gosub|return|function|exitfunction|do|loop|repeat|until|while|endwhile|for|step|next|exit|continue|if|then|else|elseif|endif|select|case\\s+default|case|endcase|endselect)\\b'
+    match: '(?i)\\b(end|goto|gosub|return|function|exitfunction|do|loop|repeat|until|while|endwhile|for|to|step|next|exit|continue|if|then|else|elseif|endif|select|case\\s+default|case|endcase|endselect)\\b'
     name: 'keyword.control.agk' # A period-delimited list of classes that will be applied to the content identified by `match`. Optional.
   }
   {
