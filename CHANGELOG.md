@@ -7,3 +7,6 @@
 * Fix C-style multiline comments
 * Fix single-line backtick comments
 * Add initial set of snippets
+
+## 0.2.1
+* Be consistent with snippets bodies, always use `// body...` comments
