@@ -1,0 +1,62 @@
+'.source.agk':
+  'function':
+    'prefix': 'func'
+    'body': """
+    function ${1:MyFunction}($2)
+      $0
+    endfunction
+    """
+  'if':
+    'prefix': 'if'
+    'body': """
+    if ${1:condition}
+      ${0:// body...}
+    endif
+    """
+  'for':
+    'prefix': 'for'
+    'body': """
+    for ${1:i = 0} to ${2:myarr.length}
+      ${0}
+    next ${3:i}
+    """
+  'repeat':
+    'prefix': 'repeat'
+    'body': """
+    repeat
+      ${0}
+    until ${1:condition}
+    """
+  'while':
+    'prefix': 'while'
+    'body': """
+    while ${1:condition}
+      ${0}
+    endwhile
+    """
+  'select':
+    'prefix': 'select'
+    'body': """
+    select ${1:condition}
+      case ${2:firstCondition}
+        ${0}
+      endcase
+    endselect
+    """
+  'case':
+    'prefix': 'case'
+    'body': """
+    case ${1:condition}
+      ${0}
+    endcase
+    """
+  'dim':
+    'prefix': 'dim'
+    'body': 'dim ${1:myArray}[${2:10}] as ${3:integer} = [${4:1, 2, 3}]'
+  'type':
+    'prefix': 'type'
+    'body': """
+    type ${1:MyType}
+      ${0}
+    endtype
+    """
