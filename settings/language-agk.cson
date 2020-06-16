@@ -1,0 +1,10 @@
+'.source.agk':
+  'editor':
+    'increaseIndentPattern': '(?x)
+      ^\\s*
+      (
+        function.+\\(.*\\)\\s*$
+        | \\bif\\b(?!.*?then)
+        | \\b(for|repeat|while|select|case|do|else|elseif|type)\\b
+      )'
+    'decreaseIndentPattern': '^\\s*(\\b(else|elseif|endif|until|endwhile|endfunction|endselect|endcase|next|loop|endtype)\\b)$'
