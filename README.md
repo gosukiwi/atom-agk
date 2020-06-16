@@ -11,6 +11,7 @@ intellisense, on-demand compilation, and a REPL-oriented debugger.
 * Autocomplete for functions, types, constants, globals and variables
 * Compile and run
 * Debugger using breakpoints and REPL
+* Most common snippets
 * Open help when pressing F1 in a built-in function
 * New project generator
 
@@ -22,11 +23,6 @@ You may need to customize the path to your `AGKCompiler.exe` file:
 
 ![Settings window](img/setting.png)
 
-# Generating a new project
-Simply `ctrl-shift-p` (`cmd-shift-p` on macOS) and run `generate-project` from
-there. That will create a new folder at your specified location with a basic AGK
-project skeleton so you can start hacking right away!
-
 # Default key bindings
 These bindings only apply when editing AGK (`.agc`) files, and can be changed in
 the package configuration. By default:
@@ -37,6 +33,24 @@ the package configuration. By default:
 * F6: Compile project and run in debug mode (`atom-agk:debug`)
 * F7: Compile project (`atom-agk:compile`)
 * F8: Toggle the debugger terminal (`atom-agk:toggle-terminal`)
+
+# Generating a new project
+Simply `ctrl-shift-p` (`cmd-shift-p` on macOS) and run `generate-project` from
+there. That will create a new folder at your specified location with a basic AGK
+project skeleton so you can start hacking right away!
+
+# Snippets
+This package comes bundled with the most common snippets. To use a snippet, just
+type the snippet and then press `tab`. That's it! Continue pressing `tab` to
+navigate to the different positions within the snippet.
+
+![Snippets GIF](img/snippets.gif)
+
+Some built-in snippets are `func`, `type`, `if`, `for`, `while`, `repeat`,
+`select`, `case`, and `dim`.
+
+You can always implement your own! Find out how
+[here](https://flight-manual.atom.io/using-atom/sections/snippets/).
 
 # Notes
 This is beta-quality software. Pull requests, bug reports and suggestions are
