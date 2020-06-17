@@ -12,4 +12,4 @@
 * Be consistent with snippets bodies, always use `// body...` comments
 
 ## 0.2.2
-* Scan included files for autocomplete
+* Scan included files which are not in the project for autocomplete
