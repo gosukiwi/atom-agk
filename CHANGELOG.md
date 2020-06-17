@@ -10,3 +10,6 @@
 
 ## 0.2.1
 * Be consistent with snippets bodies, always use `// body...` comments
+
+## 0.2.2
+* Scan included files for autocomplete
