@@ -15,4 +15,7 @@
 * Scan included files outside the current project for autocomplete
 
 ## 0.3.1
-* Use current editor to know the current project when compiling. [Fixes #1](https://github.com/gosukiwi/atom-agk/issues/1).
+* Use current editor to know the current project when compiling ([fixes #1](https://github.com/gosukiwi/atom-agk/issues/1))
+
+## 0.3.2
+* Fix function boundaries in TextMate grammar ([fixes #3](https://github.com/gosukiwi/atom-agk/issues/3))
