@@ -255,7 +255,27 @@ describe('Suggestions', () => {
     })
   })
 
-  it("does not remove include's definitions if another sourcefile is using the same include")
+  it("does not remove include's definitions if another sourcefile is using the same include", () => {
+    // given
+    atom.project.setPaths([fixture('project-a')]) // project-a/main.agc includes project-b/main.agc
+    const { suggestions, subscriptions } = build()
+
+    waitsForPromise(() => atom.workspace.open('dummy.agc'))
+    waitsForPromise(() => {
+      const buffer = atom.workspace.getActiveTextEditor().getBuffer()
+      buffer.setText('#include "../project-b/main.agc"')
+      return buffer.save()
+    })
+    runs(() => {
+      removeFile(fixture('project-a/dummy.agc'))
+      // Node's `fs.unlink` doesn't trigger events consistently, so just trigger it manually for specs purposes
+      atom.project.emitter.emit('did-change-files', [{ action: 'deleted', path: fixture('project-a/dummy.agc') }])
+      expect(suggestions.get('projectbfunc').find((definition) => definition.name === 'ProjectBFunc')).not.toBeUndefined()
+      expect(suggestions.includeList.includes[0].sources).toEqual([fixture('project-a/main.agc')])
+      subscriptions.dispose()
+    })
+  })
+
   it('scans new projects when they are added')
   it('removes definitions of removed projects')
   it('does not remove the definition when removing project if its referenced by another project in an include')
