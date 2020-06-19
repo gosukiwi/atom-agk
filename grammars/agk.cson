@@ -77,7 +77,7 @@ patterns: [
     name: 'keyword.control.agk' # A period-delimited list of classes that will be applied to the content identified by `match`. Optional.
   }
   {
-    match: '(?i)\\b(dim|global|ref|as)\\b'
+    match: '(?i)\\b(dim|global|ref|as|inc|dec)\\b'
     name: 'keyword.other.agk' # A period-delimited list of classes that will be applied to the content identified by `match`. Optional.
   }
   {
