@@ -19,3 +19,6 @@
 
 ## 0.3.2
 * Fix function boundaries in TextMate grammar ([fixes #3](https://github.com/gosukiwi/atom-agk/issues/3))
+
+## 0.3.3
+* Adds `#import_plugin`, `inc` and `dec` to grammar ([fixes #7](https://github.com/gosukiwi/atom-agk/issues/7))
