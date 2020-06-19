@@ -21,7 +21,7 @@ patterns: [
     name: 'comment.line.double-slash.agk' # A period-delimited list of classes that will be applied to the content identified by `match`. Optional.
   }
   {
-    match: '(?i)\s*#(include|insert|constant|option_explicit|company_name)\\b' # A regular expression that matches some content. Optional.
+    match: '(?i)\s*#(include|insert|constant|option_explicit|company_name|import_plugin)\\b' # A regular expression that matches some content. Optional.
     name: 'constant.other.agk'
   }
   {
