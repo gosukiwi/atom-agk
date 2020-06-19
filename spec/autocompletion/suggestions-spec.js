@@ -220,8 +220,7 @@ describe('Suggestions', () => {
     })
   })
 
-  it("removes include's definitions when it's removed in a sourcefile", () => {
-    // GIVEN
+  it("removes include's definitions when it's removed in a sourcefile", () => { // GIVEN
     atom.project.setPaths([fixture('project-c')])
     const { suggestions, subscriptions } = build()
     let includeWasScanned = false
@@ -254,8 +253,7 @@ describe('Suggestions', () => {
     })
   })
 
-  it("does not remove include's definitions if another sourcefile is using the same include", () => {
-    // GIVEN
+  it("does not remove include's definitions if another sourcefile is using the same include", () => { // GIVEN
     atom.project.setPaths([fixture('project-a')]) // project-a/main.agc includes project-b/main.agc
     const { suggestions, subscriptions } = build()
     let dummyFileWasScanned = false
@@ -280,14 +278,12 @@ describe('Suggestions', () => {
     })
     waitsFor(() => dummyFileWasScanned)
     runs(() => { // WHEN
-      // Node's `fs.unlink` doesn't trigger events consistently, so just trigger it manually for specs purposes
-      atom.project.emitter.emit('did-change-files', [{ action: 'deleted', path: fixture('project-a/dummy.agc') }])
+      unlink(fixture('project-a/dummy.agc'))
     })
     waitsFor(() => dummyFileWasCleared)
     runs(() => { // THEN
       expect(suggestions.get('projectbfunc').find((definition) => definition.name === 'ProjectBFunc')).not.toBeUndefined()
       expect(suggestions.includeList.includes[0].sources).toEqual([fixture('project-a/main.agc')])
-      unlink(fixture('project-a/dummy.agc'))
       subscriptions.dispose()
     })
   })
@@ -309,7 +305,57 @@ describe('Suggestions', () => {
     })
   })
 
-  it('removes definitions of removed projects')
-  it('does not remove the definition when removing project if its referenced by another project in an include')
+  it('removes definitions of removed projects', () => {
+    atom.project.setPaths([fixture('project-c')])
+    const { suggestions, subscriptions } = build()
+    let mainFileWasScanned = false
+    let mainFileWasCleared = false
+
+    suggestions.on('definition-set', (file) => {
+      if (file === fixture('project-c/main.agc')) mainFileWasScanned = true
+    })
+
+    suggestions.on('definition-cleared', (file) => {
+      if (file === fixture('project-c/main.agc')) mainFileWasCleared = true
+    })
+
+    waitsFor(() => mainFileWasScanned)
+    runs(() => {
+      expect(suggestions.get('projectcfunc').find((definition) => definition.name === 'ProjectCFunc')).not.toBeUndefined()
+      atom.project.setPaths([])
+    })
+    waitsFor(() => mainFileWasCleared)
+    runs(() => {
+      expect(suggestions.get('projectcfunc').find((definition) => definition.name === 'ProjectCFunc')).toBeUndefined()
+      subscriptions.dispose()
+    })
+  })
+
+  it('does not remove the definition when removing project if its referenced by another project in an include', () => {
+    atom.project.setPaths([fixture('project-a'), fixture('project-d')]) // both include `./project-b/main.agc`
+    const { suggestions, subscriptions } = build()
+    let projectBMainFileWasScanned = false
+    let projectDWasCleared = false
+
+    suggestions.on('definition-set', (file) => {
+      if (file === fixture('project-b/main.agc')) projectBMainFileWasScanned = true
+    })
+
+    suggestions.on('definition-cleared', (file) => {
+      if (file === fixture('project-d/main.agc')) projectDWasCleared = true
+    })
+
+    waitsFor(() => projectBMainFileWasScanned)
+    runs(() => {
+      expect(suggestions.get('projectbfunc').find((definition) => definition.name === 'ProjectBFunc')).not.toBeUndefined()
+      atom.project.setPaths([fixture('project-a')])
+    })
+    waitsFor(() => projectDWasCleared)
+    runs(() => {
+      expect(suggestions.get('projectbfunc').find((definition) => definition.name === 'ProjectBFunc')).not.toBeUndefined()
+      subscriptions.dispose()
+    })
+  })
+
   it('scans included files in an included file')
 })
