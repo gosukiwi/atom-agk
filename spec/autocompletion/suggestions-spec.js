@@ -182,8 +182,6 @@ describe('Suggestions', () => {
     })
   })
 
-  it('scans included files in an included file')
-
   it('removes definitions when a file in a project is removed', () => {
     atom.project.setPaths([fixture('project-c')])
     const { suggestions, subscriptions } = build()
@@ -222,9 +220,44 @@ describe('Suggestions', () => {
     })
   })
 
-  it("removes include's definitions when it's removed in a sourcefile")
+  it("removes include's definitions when it's removed in a sourcefile", () => {
+    // given
+    atom.project.setPaths([fixture('project-c')])
+    const { suggestions, subscriptions } = build()
+    let includeWasScanned = false
+    let includeWasCleared = false
+
+    suggestions.on('was-set', (file) => {
+      if (file === fixture('project-b/main.agc')) includeWasScanned = true
+    })
+
+    suggestions.on('cleared', (file) => {
+      if (file === fixture('project-b/main.agc')) includeWasCleared = true
+    })
+
+    waitsForPromise(() => atom.workspace.open('dummy.agc'))
+    waitsForPromise(() => {
+      const buffer = atom.workspace.getActiveTextEditor().getBuffer()
+      buffer.setText('#include "../project-b/main.agc"')
+      return buffer.save()
+    })
+    waitsFor(() => includeWasScanned)
+    runs(() => {
+      expect(suggestions.get('projectbfunc').find((definition) => definition.name === 'ProjectBFunc')).not.toBeUndefined()
+      // when
+      removeFile(fixture('project-c/dummy.agc'))
+    })
+    waitsFor(() => includeWasCleared)
+    // then
+    runs(() => {
+      expect(suggestions.get('projectbfunc').find((definition) => definition.name === 'ProjectBFunc')).toBeUndefined()
+      subscriptions.dispose()
+    })
+  })
+
   it("does not remove include's definitions if another sourcefile is using the same include")
   it('scans new projects when they are added')
   it('removes definitions of removed projects')
   it('does not remove the definition when removing project if its referenced by another project in an include')
+  it('scans included files in an included file')
 })
