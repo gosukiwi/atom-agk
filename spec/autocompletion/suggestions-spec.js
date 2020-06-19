@@ -1,6 +1,6 @@
 'use babel'
 import { CompositeDisposable } from 'atom'
-import { fixture, normalizePath, removeFile } from '../spec-helper'
+import { fixture, unlink } from '../spec-helper'
 import Environment from '../../lib/environment'
 import Suggestions from '../../lib/autocompletion/suggestions'
 
@@ -22,8 +22,8 @@ describe('Suggestions', () => {
     atom.project.setPaths([fixture('project-a')])
     const { suggestions, subscriptions } = build()
 
-    const disposable = suggestions.on('was-set', (file) => {
-      expect(file).toContain(normalizePath('project-a/main.agc'))
+    const disposable = suggestions.on('definition-set', (file) => {
+      expect(file).toBe(fixture('project-a/main.agc'))
       expect(suggestions.get('projectafunc').find((definition) => definition.name === 'ProjectAFunc')).not.toBeUndefined()
       expect(suggestions.get('projectcfunc').find((definition) => definition.name === 'ProjectCFunc')).toBeUndefined()
       subscriptions.dispose()
@@ -38,7 +38,7 @@ describe('Suggestions', () => {
     const editor = atom.workspace.buildTextEditor()
     spyOn(suggestions, 'handleIncludes')
 
-    suggestions.on('was-set', (file) => {
+    suggestions.on('definition-set', (file) => {
       if (file === `in-memory://editor-${editor.id}`) editorWasScanned = true
     })
 
@@ -65,7 +65,7 @@ describe('Suggestions', () => {
     let dummyFileWasScanned = false
     spyOn(suggestions, 'handleIncludes')
 
-    suggestions.on('was-set', (file) => {
+    suggestions.on('definition-set', (file) => {
       if (file === fixture('dummy.agc')) dummyFileWasScanned = true
     })
 
@@ -88,7 +88,7 @@ describe('Suggestions', () => {
     const { suggestions, subscriptions } = build()
     let includeWasScanned = false
 
-    suggestions.on('was-set', (file) => {
+    suggestions.on('definition-set', (file) => {
       if (file === fixture('project-b/main.agc')) includeWasScanned = true
     })
 
@@ -110,7 +110,7 @@ describe('Suggestions', () => {
     const { suggestions, subscriptions } = build()
     let includeWasScanned = false
 
-    suggestions.on('was-set', (file) => {
+    suggestions.on('definition-set', (file) => {
       if (file === fixture('project-b/main.agc')) includeWasScanned = true
     })
 
@@ -123,7 +123,7 @@ describe('Suggestions', () => {
     waitsFor(() => includeWasScanned)
     runs(() => {
       expect(suggestions.get('projectbfunc').find((definition) => definition.name === 'ProjectBFunc')).not.toBeUndefined()
-      removeFile(fixture('project-c/dummy.agc'))
+      unlink(fixture('project-c/dummy.agc'))
       subscriptions.dispose()
     })
   })
@@ -138,7 +138,7 @@ describe('Suggestions', () => {
     const inMemoryPath = `in-memory://editor-${editor.id}`
     const inDiskPath = fixture('somefile.agc')
 
-    const disposable = suggestions.on('was-set', (file) => {
+    const disposable = suggestions.on('definition-set', (file) => {
       if (file === inMemoryPath) wasScanned = true
       if (file === inDiskPath) savedFileWasScanned = true
     })
@@ -158,7 +158,7 @@ describe('Suggestions', () => {
     runs(() => {
       expect(suggestions.definitionTable[inDiskPath]).not.toBeUndefined()
       expect(suggestions.definitionTable[inMemoryPath]).toBeUndefined()
-      removeFile(inDiskPath)
+      unlink(inDiskPath)
       disposable.dispose()
       subscriptions.dispose()
     })
@@ -169,7 +169,7 @@ describe('Suggestions', () => {
     const { suggestions, subscriptions } = build()
     let wasSet = false
 
-    const disposable = suggestions.on('was-set', (file) => {
+    const disposable = suggestions.on('definition-set', (file) => {
       if (file !== fixture('project-b/main.agc')) return
       wasSet = true
       subscriptions.dispose()
@@ -189,13 +189,13 @@ describe('Suggestions', () => {
     let dummyFileWasCleared = false
     const dummyfile = fixture('project-c/dummy.agc')
 
-    const disposable = suggestions.on('was-set', (file) => {
+    const disposable = suggestions.on('definition-set', (file) => {
       if (file !== dummyfile) return
       dummyFileWasScanned = true
       disposable.dispose()
     })
 
-    const d = suggestions.on('cleared', (file) => {
+    const d = suggestions.on('definition-cleared', (file) => {
       expect(file).toBe(dummyfile)
       dummyFileWasCleared = true
       d.dispose()
@@ -211,7 +211,7 @@ describe('Suggestions', () => {
     waitsFor(() => dummyFileWasScanned)
     runs(() => {
       expect(suggestions.get('dummy', dummyfile).find((definition) => definition.name === 'dummy123')).not.toBeUndefined()
-      removeFile(dummyfile)
+      unlink(dummyfile)
     })
     waitsFor(() => dummyFileWasCleared)
     runs(() => {
@@ -221,17 +221,17 @@ describe('Suggestions', () => {
   })
 
   it("removes include's definitions when it's removed in a sourcefile", () => {
-    // given
+    // GIVEN
     atom.project.setPaths([fixture('project-c')])
     const { suggestions, subscriptions } = build()
     let includeWasScanned = false
     let includeWasCleared = false
 
-    suggestions.on('was-set', (file) => {
+    suggestions.on('definition-set', (file) => {
       if (file === fixture('project-b/main.agc')) includeWasScanned = true
     })
 
-    suggestions.on('cleared', (file) => {
+    suggestions.on('definition-cleared', (file) => {
       if (file === fixture('project-b/main.agc')) includeWasCleared = true
     })
 
@@ -244,39 +244,71 @@ describe('Suggestions', () => {
     waitsFor(() => includeWasScanned)
     runs(() => {
       expect(suggestions.get('projectbfunc').find((definition) => definition.name === 'ProjectBFunc')).not.toBeUndefined()
-      // when
-      removeFile(fixture('project-c/dummy.agc'))
+      // WHEN
+      unlink(fixture('project-c/dummy.agc'))
     })
     waitsFor(() => includeWasCleared)
-    // then
-    runs(() => {
+    runs(() => { // THEN
       expect(suggestions.get('projectbfunc').find((definition) => definition.name === 'ProjectBFunc')).toBeUndefined()
       subscriptions.dispose()
     })
   })
 
   it("does not remove include's definitions if another sourcefile is using the same include", () => {
-    // given
+    // GIVEN
     atom.project.setPaths([fixture('project-a')]) // project-a/main.agc includes project-b/main.agc
     const { suggestions, subscriptions } = build()
+    let dummyFileWasScanned = false
+    let dummyFileWasCleared = false
+    let includeWasScanned = false
 
+    suggestions.on('definition-set', (file) => {
+      if (file === fixture('project-a/dummy.agc')) dummyFileWasScanned = true
+      if (file === fixture('project-b/main.agc')) includeWasScanned = true
+    })
+
+    suggestions.on('definition-cleared', (file) => {
+      if (file === fixture('project-a/dummy.agc')) dummyFileWasCleared = true
+    })
+
+    waitsFor(() => includeWasScanned)
     waitsForPromise(() => atom.workspace.open('dummy.agc'))
     waitsForPromise(() => {
       const buffer = atom.workspace.getActiveTextEditor().getBuffer()
       buffer.setText('#include "../project-b/main.agc"')
       return buffer.save()
     })
-    runs(() => {
-      removeFile(fixture('project-a/dummy.agc'))
+    waitsFor(() => dummyFileWasScanned)
+    runs(() => { // WHEN
       // Node's `fs.unlink` doesn't trigger events consistently, so just trigger it manually for specs purposes
       atom.project.emitter.emit('did-change-files', [{ action: 'deleted', path: fixture('project-a/dummy.agc') }])
+    })
+    waitsFor(() => dummyFileWasCleared)
+    runs(() => { // THEN
       expect(suggestions.get('projectbfunc').find((definition) => definition.name === 'ProjectBFunc')).not.toBeUndefined()
       expect(suggestions.includeList.includes[0].sources).toEqual([fixture('project-a/main.agc')])
+      unlink(fixture('project-a/dummy.agc'))
       subscriptions.dispose()
     })
   })
 
-  it('scans new projects when they are added')
+  it('scans new projects when they are added', () => {
+    atom.project.setPaths([fixture('project-c')])
+    const { suggestions, subscriptions } = build()
+    let projectBMainFileWasScanned = false
+
+    suggestions.on('definition-set', (file) => {
+      if (file === fixture('project-b/main.agc')) projectBMainFileWasScanned = true
+    })
+
+    atom.project.addPath(fixture('project-b'))
+    waitsFor(() => projectBMainFileWasScanned)
+    runs(() => {
+      expect(suggestions.get('projectbfunc').find((definition) => definition.name === 'ProjectBFunc')).not.toBeUndefined()
+      subscriptions.dispose()
+    })
+  })
+
   it('removes definitions of removed projects')
   it('does not remove the definition when removing project if its referenced by another project in an include')
   it('scans included files in an included file')
