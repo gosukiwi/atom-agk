@@ -31,20 +31,45 @@ describe('Suggestions', () => {
     })
   })
 
-  it('does not scan includes if the file is not saved', () => {
+  it('does not scan includes in an in-memory file', () => {
+    atom.project.setPaths([fixture('non-existant-dir')])
+    const { suggestions, subscriptions } = build()
+    let editorWasScanned = false
+    const editor = atom.workspace.buildTextEditor()
+    spyOn(suggestions, 'handleIncludes')
+
+    suggestions.on('was-set', (file) => {
+      if (file === `in-memory://editor-${editor.id}`) editorWasScanned = true
+    })
+
+    waitsForPromise(() => atom.workspace.open(editor))
+    runs(() => {
+      const buffer = editor.getBuffer()
+      buffer.setText(`
+        #include "../foo.agc"
+        bar = 123
+      `)
+      buffer.emitDidStopChangingEvent()
+    })
+    waitsFor(() => editorWasScanned)
+    runs(() => {
+      expect(suggestions.get('bar', `in-memory://editor-${editor.id}`).find((definition) => definition.name === 'bar')).not.toBeUndefined()
+      expect(suggestions.handleIncludes).not.toHaveBeenCalled()
+      subscriptions.dispose()
+    })
+  })
+
+  it('does not scan includes if the file is not in a project', () => {
     atom.project.setPaths([fixture('project-c')])
     const { suggestions, subscriptions } = build()
     let dummyFileWasScanned = false
-    let filepath = null
+    spyOn(suggestions, 'handleIncludes')
 
-    const disposable = suggestions.on('was-set', (file) => {
-      if (!file.endsWith('dummy.agc')) return
-      filepath = file
-      dummyFileWasScanned = true
-      disposable.dispose()
+    suggestions.on('was-set', (file) => {
+      if (file === fixture('dummy.agc')) dummyFileWasScanned = true
     })
 
-    waitsForPromise(() => atom.workspace.open('dummy.agc'))
+    waitsForPromise(() => atom.workspace.open(fixture('dummy.agc')))
     runs(() => {
       const buffer = atom.workspace.getActiveTextEditor().getBuffer()
       buffer.setText('#include "../project-b/main.agc"')
@@ -52,20 +77,41 @@ describe('Suggestions', () => {
     })
     waitsFor(() => dummyFileWasScanned)
     runs(() => {
-      expect(suggestions.get('projectbfunc', filepath).find((definition) => definition.name === 'ProjectBFunc')).toBeUndefined()
+      expect(suggestions.get('projectbfunc').find((definition) => definition.name === 'ProjectBFunc')).toBeUndefined()
+      expect(suggestions.handleIncludes).not.toHaveBeenCalled()
       subscriptions.dispose()
     })
   })
 
-  it('scans includes once the file is saved', () => {
+  it('scans includes after didStopChanging if the file is in a project', () => {
     atom.project.setPaths([fixture('project-c')])
     const { suggestions, subscriptions } = build()
     let includeWasScanned = false
 
-    const disposable = suggestions.on('was-set', (file) => {
-      if (!file.endsWith(fixture('project-b/main.agc'))) return
-      includeWasScanned = true
-      disposable.dispose()
+    suggestions.on('was-set', (file) => {
+      if (file === fixture('project-b/main.agc')) includeWasScanned = true
+    })
+
+    waitsForPromise(() => atom.workspace.open('some-file.agc'))
+    runs(() => {
+      const buffer = atom.workspace.getActiveTextEditor().getBuffer()
+      buffer.setText('#include "../project-b/main.agc"')
+      buffer.emitDidStopChangingEvent()
+    })
+    waitsFor(() => includeWasScanned)
+    runs(() => {
+      expect(suggestions.get('projectbfunc').find((definition) => definition.name === 'ProjectBFunc')).not.toBeUndefined()
+      subscriptions.dispose()
+    })
+  })
+
+  it('scans includes after save if the file is in a project', () => {
+    atom.project.setPaths([fixture('project-c')])
+    const { suggestions, subscriptions } = build()
+    let includeWasScanned = false
+
+    suggestions.on('was-set', (file) => {
+      if (file === fixture('project-b/main.agc')) includeWasScanned = true
     })
 
     waitsForPromise(() => atom.workspace.open('dummy.agc'))
@@ -76,13 +122,47 @@ describe('Suggestions', () => {
     })
     waitsFor(() => includeWasScanned)
     runs(() => {
-      expect(suggestions.get('projectbfunc', fixture('project-b/main.agc')).find((definition) => definition.name === 'ProjectBFunc')).not.toBeUndefined()
+      expect(suggestions.get('projectbfunc').find((definition) => definition.name === 'ProjectBFunc')).not.toBeUndefined()
       removeFile(fixture('project-c/dummy.agc'))
       subscriptions.dispose()
     })
   })
 
-  it('removes the in-memory representation once a file is saved')
+  it('removes the in-memory representation once a file is saved', () => {
+    atom.project.setPaths([fixture('project-c')])
+    const { suggestions, subscriptions } = build()
+    let buffer = null
+    let wasScanned = false
+    let savedFileWasScanned = false
+    const editor = atom.workspace.buildTextEditor()
+    const inMemoryPath = `in-memory://editor-${editor.id}`
+    const inDiskPath = fixture('somefile.agc')
+
+    const disposable = suggestions.on('was-set', (file) => {
+      if (file === inMemoryPath) wasScanned = true
+      if (file === inDiskPath) savedFileWasScanned = true
+    })
+
+    waitsForPromise(() => atom.workspace.open(editor))
+    runs(() => {
+      buffer = editor.getBuffer()
+      buffer.setText('foo = 123')
+      buffer.emitDidStopChangingEvent()
+    })
+    waitsFor(() => wasScanned)
+    runs(() => {
+      expect(suggestions.definitionTable[inMemoryPath]).not.toBeUndefined()
+    })
+    waitsForPromise(() => buffer.saveAs(inDiskPath))
+    waitsFor(() => savedFileWasScanned)
+    runs(() => {
+      expect(suggestions.definitionTable[inDiskPath]).not.toBeUndefined()
+      expect(suggestions.definitionTable[inMemoryPath]).toBeUndefined()
+      removeFile(inDiskPath)
+      disposable.dispose()
+      subscriptions.dispose()
+    })
+  })
 
   it('scans included files in a project file', () => {
     atom.project.setPaths([fixture('project-a')])
@@ -90,7 +170,7 @@ describe('Suggestions', () => {
     let wasSet = false
 
     const disposable = suggestions.on('was-set', (file) => {
-      if (!file.endsWith(normalizePath('project-b/main.agc'))) return
+      if (file !== fixture('project-b/main.agc')) return
       wasSet = true
       subscriptions.dispose()
       disposable.dispose()
@@ -109,22 +189,21 @@ describe('Suggestions', () => {
     const { suggestions, subscriptions } = build()
     let dummyFileWasScanned = false
     let dummyFileWasCleared = false
-    let filepath = null
+    const dummyfile = fixture('project-c/dummy.agc')
 
     const disposable = suggestions.on('was-set', (file) => {
-      if (!file.endsWith('dummy.agc')) return
-      filepath = file
+      if (file !== dummyfile) return
       dummyFileWasScanned = true
       disposable.dispose()
     })
 
     const d = suggestions.on('cleared', (file) => {
-      expect(file.endsWith('dummy.agc')).toBe(true)
+      expect(file).toBe(dummyfile)
       dummyFileWasCleared = true
       d.dispose()
     })
 
-    waitsForPromise(() => atom.workspace.open('dummy.agc'))
+    waitsForPromise(() => atom.workspace.open(dummyfile))
     waitsForPromise(() => {
       const buffer = atom.workspace.getActiveTextEditor().getBuffer()
       buffer.setText('dummy123 = 1')
@@ -133,12 +212,12 @@ describe('Suggestions', () => {
     })
     waitsFor(() => dummyFileWasScanned)
     runs(() => {
-      expect(suggestions.get('dummy', filepath).find((definition) => definition.name === 'dummy123')).not.toBeUndefined()
-      removeFile(fixture('project-c/dummy.agc'))
+      expect(suggestions.get('dummy', dummyfile).find((definition) => definition.name === 'dummy123')).not.toBeUndefined()
+      removeFile(dummyfile)
     })
     waitsFor(() => dummyFileWasCleared)
     runs(() => {
-      expect(suggestions.get('dummy', filepath).find((definition) => definition.name === 'dummy123')).toBeUndefined()
+      expect(suggestions.get('dummy', dummyfile).find((definition) => definition.name === 'dummy123')).toBeUndefined()
       subscriptions.dispose()
     })
   })
