@@ -23,3 +23,6 @@
 ## 0.3.3
 * Adds `#import_plugin`, `inc` and `dec` to grammar ([fixes #7](https://github.com/gosukiwi/atom-agk/issues/7))
 * Optimizations, specs and bug fixes for autocomplete ([#6](https://github.com/gosukiwi/atom-agk/pull/6))
+
+## 0.4.0
+* Go to definition ([#10](https://github.com/gosukiwi/atom-agk/pull/10))
