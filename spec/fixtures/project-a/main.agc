@@ -3,3 +3,5 @@
 function ProjectAFunc()
   // body...
 endfunction
+
+ProjectBFunc()
