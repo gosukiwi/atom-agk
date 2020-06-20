@@ -27,8 +27,8 @@
               "command": "atom-agk:toggle-breakpoint"
             },
             {
-              "label": "Open AGK documentation for function under cursor",
-              "command": "atom-agk:open-definition"
+              "label": "Open AGK help for command under cursor",
+              "command": "atom-agk:open-help"
             },
             {
               "label": "Go to definition for function under cursor",
@@ -42,11 +42,11 @@
   "context-menu": {
     "atom-workspace": [
       {
-        "label": "Open AGK documentation",
-        "command": "atom-agk:open-definition"
+        "label": "Open AGK command help",
+        "command": "atom-agk:open-help"
       },
       {
-        "label": "Go to definition",
+        "label": "Go to function definition",
         "command": "atom-agk:go-to-definition"
       }
     ]

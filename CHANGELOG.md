@@ -26,3 +26,4 @@
 
 ## 0.4.0
 * Go to definition ([#10](https://github.com/gosukiwi/atom-agk/pull/10))
+* Rename "Open Definition" to "Open Help" ([fixes #8](https://github.com/gosukiwi/atom-agk/issues/8))

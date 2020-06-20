@@ -1,16 +1,16 @@
 'use babel'
 import { CompositeDisposable } from 'atom'
-import DefinitionOpener from '../lib/definition-opener'
+import HelpOpener from '../lib/help-opener'
 import Environment from '../lib/environment'
 
-describe('DefinitionOpener', () => {
+describe('HelpOpener', () => {
   it('calls open when atom-agk:open-definition', () => {
     const subscriptions = new CompositeDisposable()
-    const opener = new DefinitionOpener({ subscriptions })
+    const opener = new HelpOpener({ subscriptions })
     const workspaceElement = atom.views.getView(atom.workspace)
     spyOn(opener, 'open')
 
-    atom.commands.dispatch(workspaceElement, 'atom-agk:open-definition')
+    atom.commands.dispatch(workspaceElement, 'atom-agk:open-help')
 
     expect(opener.open).toHaveBeenCalled()
   })
@@ -19,7 +19,7 @@ describe('DefinitionOpener', () => {
     it('calls opener', () => {
       const environment = new Environment()
       const subscriptions = new CompositeDisposable()
-      const opener = new DefinitionOpener({ subscriptions, environment })
+      const opener = new HelpOpener({ subscriptions, environment })
       spyOn(environment, 'compilerPath').andReturn('C:\\Compiler.exe')
       spyOn(opener, 'opener')
 
@@ -35,7 +35,7 @@ describe('DefinitionOpener', () => {
   describe('.getWordAtColumn', () => {
     it('finds the proper word', () => {
       const subscriptions = new CompositeDisposable()
-      const opener = new DefinitionOpener({ subscriptions })
+      const opener = new HelpOpener({ subscriptions })
 
       const match = opener.getWordAtColumn('  Print()', 2)
 
@@ -47,7 +47,7 @@ describe('DefinitionOpener', () => {
     it('finds a command by name', () => {
       const subscriptions = new CompositeDisposable()
       const dummyCommand = { name: 'potato' }
-      const opener = new DefinitionOpener({ subscriptions, definitions: [dummyCommand] })
+      const opener = new HelpOpener({ subscriptions, definitions: [dummyCommand] })
 
       expect(opener.findCommand('potato')).toBe(dummyCommand)
     })
@@ -55,7 +55,7 @@ describe('DefinitionOpener', () => {
     it('is case insensitive', () => {
       const subscriptions = new CompositeDisposable()
       const dummyCommand = { name: 'potato' }
-      const opener = new DefinitionOpener({ subscriptions, definitions: [dummyCommand] })
+      const opener = new HelpOpener({ subscriptions, definitions: [dummyCommand] })
 
       expect(opener.findCommand('POTato')).toBe(dummyCommand)
     })
