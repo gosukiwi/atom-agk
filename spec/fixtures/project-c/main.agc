@@ -1,0 +1,3 @@
+function ProjectCFunc()
+  // body...
+endfunction
