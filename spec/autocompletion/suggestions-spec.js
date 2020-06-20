@@ -357,5 +357,21 @@ describe('Suggestions', () => {
     })
   })
 
+  it('scans included files outside a project', () => {
+    atom.project.setPaths([fixture('project-d')])
+    const { suggestions, subscriptions } = build()
+    let demoFileWasScanned = false
+
+    suggestions.on('definition-set', (file) => {
+      if (file === fixture('demo.agc')) demoFileWasScanned = true
+    })
+
+    waitsFor(() => demoFileWasScanned)
+    runs(() => {
+      expect(suggestions.get('foo').find((definition) => definition.name === 'Foo')).not.toBeUndefined()
+      subscriptions.dispose()
+    })
+  })
+
   it('scans included files in an included file')
 })
