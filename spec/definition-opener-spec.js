@@ -1,6 +1,5 @@
 'use babel'
 import { CompositeDisposable } from 'atom'
-// import { fixture } from './spec-helper'
 import DefinitionOpener from '../lib/definition-opener'
 import Environment from '../lib/environment'
 

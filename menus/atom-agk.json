@@ -25,10 +25,30 @@
             {
               "label": "Toggle breakpoint in current line",
               "command": "atom-agk:toggle-breakpoint"
+            },
+            {
+              "label": "Open AGK documentation for function under cursor",
+              "command": "atom-agk:open-definition"
+            },
+            {
+              "label": "Go to definition for function under cursor",
+              "command": "atom-agk:go-to-definition"
             }
           ]
         }
       ]
     }
-  ]
+  ],
+  "context-menu": {
+    "atom-workspace": [
+      {
+        "label": "Open AGK documentation",
+        "command": "atom-agk:open-definition"
+      },
+      {
+        "label": "Go to definition",
+        "command": "atom-agk:go-to-definition"
+      }
+    ]
+  }
 }
