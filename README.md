@@ -9,6 +9,7 @@ intellisense, on-demand compilation, and a REPL-oriented debugger.
 # Features at a glance
 * Syntax highlighting
 * Autocomplete for functions, types, constants, globals and variables
+* Go To Definition for user-defined functions
 * Compile and run
 * Debugger using breakpoints and REPL
 * Most common snippets
@@ -51,6 +52,12 @@ Some built-in snippets are `func`, `type`, `if`, `for`, `while`, `repeat`,
 
 You can always implement your own! Find out how
 [here](https://flight-manual.atom.io/using-atom/sections/snippets/).
+
+# Go To Definition
+You can press `F2` (or bind `atom-agk:go-to-definition` to any key combination
+you want) while stepping on a function to go to it's definition!
+
+![Go To Definition GIF](img/go-to-definition.gif)
 
 # Notes
 This is beta-quality software. Pull requests, bug reports and suggestions are
