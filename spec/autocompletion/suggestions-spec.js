@@ -182,6 +182,24 @@ describe('Suggestions', () => {
     })
   })
 
+  it('scans inserted files as well', () => {
+    atom.project.setPaths([fixture('project-e')])
+    const { suggestions, subscriptions } = build()
+    let otherFileWasScanned = false
+
+    const disposable = suggestions.on('definition-set', (file) => {
+      if (file !== fixture('project-b/other.agc')) return
+      otherFileWasScanned = true
+      subscriptions.dispose()
+      disposable.dispose()
+    })
+
+    waitsFor(() => otherFileWasScanned)
+    runs(() => {
+      expect(suggestions.get('other').find((definition) => definition.name === 'OtherProjectBFunc')).not.toBeUndefined()
+    })
+  })
+
   it('removes definitions when a file in a project is removed', () => {
     atom.project.setPaths([fixture('project-c')])
     const { suggestions, subscriptions } = build()
