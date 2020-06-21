@@ -28,3 +28,6 @@
 * Go to definition ([#10](https://github.com/gosukiwi/atom-agk/pull/10))
 * Rename "Open Definition" to "Open Help" ([fixes #8](https://github.com/gosukiwi/atom-agk/issues/8))
 * Allow user not to open terminal on load ([fixes #5](https://github.com/gosukiwi/atom-agk/issues/5))
+
+## 0.4.1
+* Scan inserted files (not only the ones included using `#include`)
