@@ -1,8 +1,8 @@
 'use babel'
 import { CompositeDisposable } from 'atom'
-import { fixture } from './spec-helper'
-import GoToDefinition from '../lib/go-to-definition'
-import Suggestions from '../lib/autocompletion/suggestions'
+import { fixture } from '../spec-helper'
+import GoToDefinition from '../../lib/word-actions/go-to-definition'
+import Suggestions from '../../lib/autocompletion/suggestions'
 
 describe('GoToDefinition', () => {
   it('calls go when atom-agk:go-to-definition', () => {

@@ -1,7 +1,7 @@
 'use babel'
 import { CompositeDisposable } from 'atom'
-import HelpOpener from '../lib/help-opener'
-import Environment from '../lib/environment'
+import HelpOpener from '../../lib/word-actions/help-opener'
+import Environment from '../../lib/environment'
 
 describe('HelpOpener', () => {
   it('calls open when atom-agk:open-definition', () => {
