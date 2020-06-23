@@ -32,17 +32,6 @@ describe('HelpOpener', () => {
     })
   })
 
-  describe('.getWordAtColumn', () => {
-    it('finds the proper word', () => {
-      const subscriptions = new CompositeDisposable()
-      const opener = new HelpOpener({ subscriptions })
-
-      const match = opener.getWordAtColumn('  Print()', 2)
-
-      expect(match).toBe('Print')
-    })
-  })
-
   describe('.findCommand', () => {
     it('finds a command by name', () => {
       const subscriptions = new CompositeDisposable()
