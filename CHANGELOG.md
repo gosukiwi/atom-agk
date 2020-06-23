@@ -35,3 +35,6 @@
 ## 0.5.0
 * Go to include ([closes #12](https://github.com/gosukiwi/atom-agk/issues/12))
 * Fix go to definition when word starts with empty spaces
+
+## 0.5.1
+* Fix numbers in grammar for types and functions
