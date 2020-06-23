@@ -31,3 +31,6 @@
 
 ## 0.4.1
 * Scan inserted files (not only the ones included using `#include`)
+
+## 0.5.0
+* Go to include ([closes #12](https://github.com/gosukiwi/atom-agk/issues/12))
