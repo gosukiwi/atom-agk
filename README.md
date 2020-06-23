@@ -28,7 +28,9 @@ You may need to customize the path to your `AGKCompiler.exe` file:
 These bindings only apply when editing AGK (`.agc`) files, and can be changed in
 the package configuration. By default:
 
-* F1: Open documentation for built-in function under cursor, or documenation home if the function was not found (`atom-agk:open-definition`)
+* F1: Open documentation for built-in function under cursor, or documenation home if the function was not found (`atom-agk:open-help`)
+* F2: Go to function definition for function under cursor (`atom-agk:go-to-definition`)
+* F3: Go to include for `#include` or `#insert` in current line (`atom-agk:go-to-include`)
 * F4: Toggle debugger breakpoint in current line (`atom-agk:toggle-breakpoint`)
 * F5: Compile project and run (`atom-agk:compile-and-run`)
 * F6: Compile project and run in debug mode (`atom-agk:debug`)
