@@ -2,6 +2,7 @@
   "atom-text-editor[data-grammar='source agk']": {
     "f1": "atom-agk:open-help",
     "f2": "atom-agk:go-to-definition",
+    "f3": "atom-agk:go-to-include",
     "f4": "atom-agk:toggle-breakpoint",
     "f5": "atom-agk:compile-and-run",
     "f6": "atom-agk:debug",

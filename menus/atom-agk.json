@@ -33,6 +33,10 @@
             {
               "label": "Go to definition for function under cursor",
               "command": "atom-agk:go-to-definition"
+            },
+            {
+              "label": "Go to included file under cursor",
+              "command": "atom-agk:go-to-include"
             }
           ]
         }
@@ -48,6 +52,10 @@
       {
         "label": "Go to function definition",
         "command": "atom-agk:go-to-definition"
+      },
+      {
+        "label": "Go to included file",
+        "command": "atom-agk:go-to-include"
       }
     ]
   }
