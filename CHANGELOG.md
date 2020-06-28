@@ -38,3 +38,6 @@
 
 ## 0.5.1
 * Fix numbers in grammar for types and functions
+
+## 0.5.2
+* Several grammar fixes ([fixes #15](https://github.com/gosukiwi/atom-agk/issues/15))
