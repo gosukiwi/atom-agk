@@ -45,3 +45,8 @@
 ## 0.5.3
 * Fix greedy type matching ([fixes #19](https://github.com/gosukiwi/atom-agk/issues/19#issuecomment-651222220))
 * Better constant value matching
+
+## 0.6.0
+* Go to first error on compilation fail
+* Highlight errors in terminal
+* Navigate errors in terminal by clicking
