@@ -41,3 +41,7 @@
 
 ## 0.5.2
 * Several grammar fixes ([fixes #15](https://github.com/gosukiwi/atom-agk/issues/15))
+
+## 0.5.3
+* Fix greedy type matching ([fixes #19](https://github.com/gosukiwi/atom-agk/issues/19#issuecomment-651222220))
+* Better constant value matching
