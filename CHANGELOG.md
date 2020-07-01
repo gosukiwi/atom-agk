@@ -1,6 +1,6 @@
 ## 0.7.0
 * Allow to generate 64 bits executables
-* Do not try to open a file on error if it doesn't make sense
+* Better error/success reporting in terminal
 
 ## 0.6.0
 * Go to first error on compilation fail
