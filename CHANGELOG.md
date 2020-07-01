@@ -1,3 +1,6 @@
+## 0.7.0
+* Allow to generate 64 bits executables
+
 ## 0.6.0
 * Go to first error on compilation fail
 * Highlight errors in terminal
