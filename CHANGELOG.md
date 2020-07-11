@@ -1,3 +1,6 @@
+## 0.8.0
+* Symbol Explorer: Display all types and functions for current file
+
 ## 0.7.0
 * Allow to generate 64 bits executables
 * Better error/success reporting in terminal
