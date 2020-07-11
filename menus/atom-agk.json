@@ -11,6 +11,10 @@
               "command": "atom-agk:toggle-terminal"
             },
             {
+              "label": "Toggle Symbol Explorer",
+              "command": "atom-agk:toggle-symbol-explorer"
+            },
+            {
               "label": "Compile",
               "command": "atom-agk:compile"
             },

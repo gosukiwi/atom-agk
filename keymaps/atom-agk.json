@@ -7,6 +7,7 @@
     "f5": "atom-agk:compile-and-run",
     "f6": "atom-agk:debug",
     "f7": "atom-agk:compile",
-    "f8": "atom-agk:toggle-terminal"
+    "f8": "atom-agk:toggle-terminal",
+    "f9": "atom-agk:toggle-symbol-explorer"
   }
 }

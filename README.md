@@ -36,6 +36,7 @@ the package configuration. By default:
 * F6: Compile project and run in debug mode (`atom-agk:debug`)
 * F7: Compile project (`atom-agk:compile`)
 * F8: Toggle the debugger terminal (`atom-agk:toggle-terminal`)
+* F9: Toggle symbol explorer (`atom-agk:toggle-symbol-explorer`)
 
 # Generating a new project
 Simply `ctrl-shift-p` (`cmd-shift-p` on macOS) and run `generate-project` from
