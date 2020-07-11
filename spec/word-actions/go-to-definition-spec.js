@@ -14,7 +14,7 @@ describe('GoToDefinition', () => {
     let includedFileWasScanned = false
     spyOn(goToDefinition, 'open')
 
-    suggestions.on('definition-set', (file) => {
+    suggestions.on('definition-set', ({ file }) => {
       if (file === fixture('project-b/main.agc')) includedFileWasScanned = true
     })
 

@@ -22,7 +22,7 @@ describe('Suggestions', () => {
     atom.project.setPaths([fixture('project-a')])
     const { suggestions, subscriptions } = build()
 
-    const disposable = suggestions.on('definition-set', (file) => {
+    const disposable = suggestions.on('definition-set', ({ file }) => {
       expect(file).toBe(fixture('project-a/main.agc'))
       expect(suggestions.get('projectafunc').find((definition) => definition.name === 'ProjectAFunc')).not.toBeUndefined()
       expect(suggestions.get('projectcfunc').find((definition) => definition.name === 'ProjectCFunc')).toBeUndefined()
@@ -38,7 +38,7 @@ describe('Suggestions', () => {
     const editor = atom.workspace.buildTextEditor()
     spyOn(suggestions, 'handleIncludes')
 
-    suggestions.on('definition-set', (file) => {
+    suggestions.on('definition-set', ({ file }) => {
       if (file === `in-memory://editor-${editor.id}`) editorWasScanned = true
     })
 
@@ -65,7 +65,7 @@ describe('Suggestions', () => {
     let dummyFileWasScanned = false
     spyOn(suggestions, 'handleIncludes')
 
-    suggestions.on('definition-set', (file) => {
+    suggestions.on('definition-set', ({ file }) => {
       if (file === fixture('dummy.agc')) dummyFileWasScanned = true
     })
 
@@ -88,7 +88,7 @@ describe('Suggestions', () => {
     const { suggestions, subscriptions } = build()
     let includeWasScanned = false
 
-    suggestions.on('definition-set', (file) => {
+    suggestions.on('definition-set', ({ file }) => {
       if (file === fixture('project-b/main.agc')) includeWasScanned = true
     })
 
@@ -110,7 +110,7 @@ describe('Suggestions', () => {
     const { suggestions, subscriptions } = build()
     let includeWasScanned = false
 
-    suggestions.on('definition-set', (file) => {
+    suggestions.on('definition-set', ({ file }) => {
       if (file === fixture('project-b/main.agc')) includeWasScanned = true
     })
 
@@ -138,7 +138,7 @@ describe('Suggestions', () => {
     const inMemoryPath = `in-memory://editor-${editor.id}`
     const inDiskPath = fixture('somefile.agc')
 
-    const disposable = suggestions.on('definition-set', (file) => {
+    const disposable = suggestions.on('definition-set', ({ file }) => {
       if (file === inMemoryPath) wasScanned = true
       if (file === inDiskPath) savedFileWasScanned = true
     })
@@ -169,7 +169,7 @@ describe('Suggestions', () => {
     const { suggestions, subscriptions } = build()
     let wasSet = false
 
-    const disposable = suggestions.on('definition-set', (file) => {
+    const disposable = suggestions.on('definition-set', ({ file }) => {
       if (file !== fixture('project-b/main.agc')) return
       wasSet = true
       subscriptions.dispose()
@@ -187,7 +187,7 @@ describe('Suggestions', () => {
     const { suggestions, subscriptions } = build()
     let otherFileWasScanned = false
 
-    const disposable = suggestions.on('definition-set', (file) => {
+    const disposable = suggestions.on('definition-set', ({ file }) => {
       if (file !== fixture('project-b/other.agc')) return
       otherFileWasScanned = true
       subscriptions.dispose()
@@ -207,7 +207,7 @@ describe('Suggestions', () => {
     let dummyFileWasCleared = false
     const dummyfile = fixture('project-c/dummy.agc')
 
-    const disposable = suggestions.on('definition-set', (file) => {
+    const disposable = suggestions.on('definition-set', ({ file }) => {
       if (file !== dummyfile) return
       dummyFileWasScanned = true
       disposable.dispose()
@@ -244,7 +244,7 @@ describe('Suggestions', () => {
     let includeWasScanned = false
     let includeWasCleared = false
 
-    suggestions.on('definition-set', (file) => {
+    suggestions.on('definition-set', ({ file }) => {
       if (file === fixture('project-b/main.agc')) includeWasScanned = true
     })
 
@@ -278,7 +278,7 @@ describe('Suggestions', () => {
     let dummyFileWasCleared = false
     let includeWasScanned = false
 
-    suggestions.on('definition-set', (file) => {
+    suggestions.on('definition-set', ({ file }) => {
       if (file === fixture('project-a/dummy.agc')) dummyFileWasScanned = true
       if (file === fixture('project-b/main.agc')) includeWasScanned = true
     })
@@ -311,7 +311,7 @@ describe('Suggestions', () => {
     const { suggestions, subscriptions } = build()
     let projectBMainFileWasScanned = false
 
-    suggestions.on('definition-set', (file) => {
+    suggestions.on('definition-set', ({ file }) => {
       if (file === fixture('project-b/main.agc')) projectBMainFileWasScanned = true
     })
 
@@ -329,7 +329,7 @@ describe('Suggestions', () => {
     let mainFileWasScanned = false
     let mainFileWasCleared = false
 
-    suggestions.on('definition-set', (file) => {
+    suggestions.on('definition-set', ({ file }) => {
       if (file === fixture('project-c/main.agc')) mainFileWasScanned = true
     })
 
@@ -355,7 +355,7 @@ describe('Suggestions', () => {
     let projectBMainFileWasScanned = false
     let projectDWasCleared = false
 
-    suggestions.on('definition-set', (file) => {
+    suggestions.on('definition-set', ({ file }) => {
       if (file === fixture('project-b/main.agc')) projectBMainFileWasScanned = true
     })
 
@@ -380,7 +380,7 @@ describe('Suggestions', () => {
     const { suggestions, subscriptions } = build()
     let demoFileWasScanned = false
 
-    suggestions.on('definition-set', (file) => {
+    suggestions.on('definition-set', ({ file }) => {
       if (file === fixture('demo.agc')) demoFileWasScanned = true
     })
 
@@ -396,7 +396,7 @@ describe('Suggestions', () => {
     const { suggestions, subscriptions } = build()
     let demoFileWasScanned = false
 
-    suggestions.on('definition-set', (file) => {
+    suggestions.on('definition-set', ({ file }) => {
       if (file === fixture('demo.agc')) demoFileWasScanned = true
     })
 
