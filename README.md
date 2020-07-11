@@ -62,6 +62,15 @@ you want) while stepping on a function to go to it's definition!
 
 ![Go To Definition GIF](img/go-to-definition.gif)
 
+# Symbol Explorer
+You can press `F9` (`atom-agk:toggle-symbol-explorer`) to toggle the symbol
+explorer:
+
+![Symbol Explorer](img/symbol-explorer.gif)
+
+Symbols from the current file will be showed on top. All other symbols will be
+sorted alphabetically.
+
 # Notes
 This is beta-quality software. Pull requests, bug reports and suggestions are
 welcome. Some things to note:
