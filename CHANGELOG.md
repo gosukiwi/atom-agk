@@ -1,3 +1,6 @@
+## 0.8.1
+* Minor style changes for Symbol Explorer
+
 ## 0.8.0
 * Symbol Explorer: Display all types and functions for current file
 
