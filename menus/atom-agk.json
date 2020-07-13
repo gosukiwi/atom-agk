@@ -7,6 +7,10 @@
           "label": "atom-agk",
           "submenu": [
             {
+              "label": "Generate Project",
+              "command": "atom-agk:generate-project"
+            },
+            {
               "label": "Toggle AGK Terminal",
               "command": "atom-agk:toggle-terminal"
             },
