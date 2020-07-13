@@ -1,3 +1,6 @@
+## 0.8.2
+* Add `atom-agk:generate-project` to menu
+
 ## 0.8.1
 * Minor style changes for Symbol Explorer
 
