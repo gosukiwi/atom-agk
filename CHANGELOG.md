@@ -1,3 +1,6 @@
+## 0.8.3
+* Fix constant matcher eager regex
+
 ## 0.8.2
 * Add `atom-agk:generate-project` to menu
 
