@@ -1,7 +1,7 @@
 {
   "name": "atom-agk",
   "main": "./lib/main",
-  "version": "0.8.3",
+  "version": "0.8.4",
   "description": "AppGameKit support from Atom.",
   "keywords": [
     "agk",
