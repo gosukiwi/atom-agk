@@ -1,3 +1,7 @@
+## 0.8.4
+* Generator now loads on-demand.
+* Better generator defaults.
+
 ## 0.8.3
 * Fix constant matcher eager regex
 
