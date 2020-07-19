@@ -7,6 +7,9 @@
     "agk",
     "appgamekit"
   ],
+  "activationCommands": {
+    "atom-workspace": "atom-agk:generate-project"
+  },
   "activationHooks": [
     "source.agk:root-scope-used"
   ],
