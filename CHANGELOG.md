@@ -1,3 +1,6 @@
+## 0.8.5
+* Do not capture single-comment contents in autocomplete
+
 ## 0.8.4
 * Generator now loads on-demand.
 * Better generator defaults.
