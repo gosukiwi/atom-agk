@@ -1,3 +1,6 @@
+## 0.9.0
+* Add constants and globals to Symbol Explorer
+
 ## 0.8.6
 * Do not allow keywords in function names
 
