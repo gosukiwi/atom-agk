@@ -1,3 +1,6 @@
+## 0.8.6
+* Do not allow keywords in function names
+
 ## 0.8.5
 * Do not capture single-comment contents in autocomplete
 
