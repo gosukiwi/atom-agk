@@ -67,7 +67,7 @@ patterns: [
         name: 'support.function.agk'
   }
   {
-    match: '\\b((?![0-9]+)[a-zA-Z0-9_]+)\\s*\\('
+    match: '(?i)\\b((?!end|goto|gosub|return|function|exitfunction|do|loop|repeat|until|while|endwhile|for|to|step|next|exit|continue|if|then|else|elseif|endif|select|case|endcase|endselect)(?![0-9]+)[a-zA-Z0-9_]+)\\s*\\('
     captures:
       1:
         name: 'entity.name.function.agk'
