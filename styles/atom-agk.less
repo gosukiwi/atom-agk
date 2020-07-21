@@ -96,20 +96,25 @@ atom-text-editor .gutter .line-number.agk-debugger-breakpoint {
   }
 }
 
-.agk-select-badge-blue {
-  color: #61afef;
-  background-color: #314356;
+.agk-select-badge {
   margin-right: 1rem;
   padding: .25rem 1rem;
   display: inline-block;
 }
 
-.agk-select-badge-yellow {
+.agk-select-badge.blue {
+  color: #61afef;
+  background-color: #314356;
+}
+
+.agk-select-badge.yellow {
   color: #e5c07b;
-  background-color: #4C463F;
-  margin-right: 1rem;
-  padding: .25rem 1rem;
-  display: inline-block;
+  background-color: #4c463f;
+}
+
+.agk-select-badge.orange {
+  color: #d19a66;
+  background-color: #483f3a;
 }
 
 .agk-scroller {
@@ -134,6 +139,10 @@ atom-text-editor .gutter .line-number.agk-debugger-breakpoint {
   margin: 0;
   background-color: @app-background-color;
 
+  .agk-select-badge {
+    width: 28px;
+  }
+
   li {
     cursor: pointer;
     padding: 0;
@@ -145,12 +154,16 @@ atom-text-editor .gutter .line-number.agk-debugger-breakpoint {
     &:hover {
       background-color: @background-color-highlight;
 
-      .agk-select-badge-blue {
+      .agk-select-badge.blue {
         background-color: #41556c;
       }
 
-      .agk-select-badge-yellow {
+      .agk-select-badge.yellow {
         background-color: #5c5855;
+      }
+
+      .agk-select-badge.orange {
+        background-color: #585150;
       }
     }
   }
