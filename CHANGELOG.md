@@ -1,3 +1,6 @@
+## 0.9.1
+* Fix constant matching to work with Windows line endings
+
 ## 0.9.0
 * Add constants and globals to Symbol Explorer
 
