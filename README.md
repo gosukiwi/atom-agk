@@ -17,10 +17,10 @@ intellisense, on-demand compilation, and a REPL-oriented debugger.
 * New project generator
 
 # Installation
-Install it like any other package, just `ctrl-,`, go to packages, search for
+Install it like any other Atom package, just `ctrl-,`, go to _Install_, search for
 `atom-agk`, and that's it!
 
-You may need to customize the path to your `AGKCompiler.exe` file:
+You'll most likely need to customize the path to your `AGKCompiler.exe` file:
 
 ![Settings window](img/setting.png)
 
